@@ -15,20 +15,7 @@
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
-<!-- 自动渲染页面中的公式 -->
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    renderMathInElement(document.body, {
-      delimiters: [
-        {left: "$$", right: "$$", display: true},
-        {left: "$", right: "$", display: false}
-      ]
-    });
-  });
-</script>
+
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
@@ -326,7 +313,7 @@
 
 <div class="copyright">
   
-  &copy; 2015 – 
+  &copy; 
   <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
@@ -349,6 +336,26 @@
   </div>
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
@@ -412,6 +419,7 @@
       },
       tex: {
         inlineMath: {'[+]': [['$', '$']]},
+        displayMath: {'[+]': [['$$', '$$']]},
           packages: {'[+]': ['mhchem']},
         tags: 'ams'
       },
@@ -441,7 +449,7 @@
     };
     (function () {
       var script = document.createElement('script');
-      script.src = '[object Object]';
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
       script.defer = true;
       document.head.appendChild(script);
     })();
