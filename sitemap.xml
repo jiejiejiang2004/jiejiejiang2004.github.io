@@ -2,9 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://jiejiejiang2004.github.io/2025/11/23/%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88MySQL%EF%BC%89/</loc>
+    <loc>https://jiejiejiang2004.github.io/2025/11/23/%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88MySQL%EF%BC%89%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/</loc>
     
-    <lastmod>2025-11-22</lastmod>
+    <lastmod>2025-11-23</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -85,36 +85,43 @@
 
   <url>
     <loc>https://jiejiejiang2004.github.io/</loc>
-    <lastmod>2025-11-22</lastmod>
+    <lastmod>2025-11-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>https://jiejiejiang2004.github.io/tags/Nowcoder/</loc>
-    <lastmod>2025-11-22</lastmod>
+    <loc>https://jiejiejiang2004.github.io/tags/DataBase/</loc>
+    <lastmod>2025-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://jiejiejiang2004.github.io/tags/DataBase-MySQL/</loc>
-    <lastmod>2025-11-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jiejiejiang2004.github.io/tags/SCAU/</loc>
-    <lastmod>2025-11-22</lastmod>
+    <loc>https://jiejiejiang2004.github.io/tags/MySQL/</loc>
+    <lastmod>2025-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jiejiejiang2004.github.io/tags/Fenwick/</loc>
-    <lastmod>2025-11-22</lastmod>
+    <lastmod>2025-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jiejiejiang2004.github.io/tags/SCAU/</loc>
+    <lastmod>2025-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jiejiejiang2004.github.io/tags/Nowcoder/</loc>
+    <lastmod>2025-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -123,7 +130,7 @@
   
   <url>
     <loc>https://jiejiejiang2004.github.io/categories/%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2025-11-22</lastmod>
+    <lastmod>2025-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

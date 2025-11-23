@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jiejiejiang2004.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="学习须知（Warning）  学习建议：先理解基础理论→再练实操→最后深化进阶内容 环境说明：MySQL版本选择、环境搭建基础要求  数据库基础理论 数据库设计核心 E-R模型（实体-关系模型）  实体、属性、关系的概念 E-R图绘制基础（简单场景应用）  关系数据库规范化入门  为什么需要规范化（避免数据冗余） 函数依赖基础（简单理解“字段间的关联关系”） 核心范">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库（MySQL）知识整理">
+<meta property="og:url" content="https://jiejiejiang2004.github.io/2025/11/23/%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88MySQL%EF%BC%89%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="学习须知（Warning）  学习建议：先理解基础理论→再练实操→最后深化进阶内容 环境说明：MySQL版本选择、环境搭建基础要求  数据库基础理论 数据库设计核心 E-R模型（实体-关系模型）  实体、属性、关系的概念 E-R图绘制基础（简单场景应用）  关系数据库规范化入门  为什么需要规范化（避免数据冗余） 函数依赖基础（简单理解“字段间的关联关系”） 核心范">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-23T17:31:28.684Z">
+<meta property="article:author" content="jiejiejiang">
+<meta property="article:tag" content="DataBase">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jiejiejiang2004.github.io/2025/11/23/%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88MySQL%EF%BC%89%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数据库（MySQL）知识整理 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiejiejiang2004.github.io/2025/11/23/%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88MySQL%EF%BC%89%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="jiejiejiang">
+      <meta itemprop="description" content="现在开始，还来得及">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据库（MySQL）知识整理
+        </h1>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-11-23 00:00:00" itemprop="dateCreated datePublished" datetime="2025-11-23T00:00:00+08:00">2025-11-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-11-24 01:31:28" itemprop="dateModified" datetime="2025-11-24T01:31:28+08:00">2025-11-24</time>
+              </span>
+
+          
+            <span id="/2025/11/23/%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88MySQL%EF%BC%89%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/" class="post-meta-item leancloud_visitors" data-flag-title="数据库（MySQL）知识整理" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2025/11/23/%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88MySQL%EF%BC%89%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2025/11/23/%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88MySQL%EF%BC%89%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>29 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="学习须知warning">学习须知（Warning）</h1>
+<ul>
+<li>学习建议：先理解基础理论→再练实操→最后深化进阶内容</li>
+<li>环境说明：MySQL版本选择、环境搭建基础要求</li>
+</ul>
+<h1 id="数据库基础理论">数据库基础理论</h1>
+<h2 id="数据库设计核心">数据库设计核心</h2>
+<h3 id="e-r模型实体-关系模型">E-R模型（实体-关系模型）</h3>
+<ul>
+<li>实体、属性、关系的概念</li>
+<li>E-R图绘制基础（简单场景应用）</li>
+</ul>
+<h3 id="关系数据库规范化入门">关系数据库规范化入门</h3>
+<ul>
+<li>为什么需要规范化（避免数据冗余）</li>
+<li>函数依赖基础（简单理解“字段间的关联关系”）</li>
+<li>核心范式（重点：第一范式1NF、第二范式2NF、第三范式3NF）
+<ul>
+<li>1NF：原子性（字段不可拆分）</li>
+<li>2NF：消除部分依赖（基于主键的完全依赖）</li>
+<li>3NF：消除传递依赖（不依赖非主键的冗余字段）</li>
+</ul></li>
+</ul>
+<h1 id="核心术语解析">核心术语解析</h1>
+<ul>
+<li>数据库、表、字段、记录、主键、外键、索引等基础术语</li>
+<li>SQL语句分类（DQL查询、DML操作、DDL定义、DCL控制）</li>
+</ul>
+<h1 id="数据库基础操作">数据库基础操作</h1>
+<ul>
+<li>查看数据库/表：<code>SHOW DATABASES</code>/<code>SHOW TABLES</code></li>
+<li>查看表结构：<code>SHOW COLUMNS FROM 表名</code>/<code>DESCRIBE 表名</code></li>
+<li>查看状态/权限：<code>SHOW STATUS</code>/<code>SHOW GRANTS FOR 用户</code></li>
+<li>切换数据库：<code>USE 数据库名</code></li>
+</ul>
+<h1 id="数据查询select语句">数据查询：SELECT语句</h1>
+<h2 id="select-基本格式">SELECT 基本格式</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT 数据库.列1, 数据库.列2</span><br><span class="line">FROM 数据库;</span><br></pre></td></tr></table></figure>
+<p>特殊的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT *</span><br><span class="line">FROM 数据库;</span><br></pre></td></tr></table></figure>
+<p>表示查询该数据库的所有列</p>
+<h2 id="distinct-关键字结果去重">DISTINCT 关键字（结果去重）</h2>
+<p>如果想要每个值只出现一次，可以使用 DISTINCT 关键字，使用方法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT DISTINCT 数据库.列1, 数据库.列2</span><br><span class="line">FROM 数据库;</span><br></pre></td></tr></table></figure>
+<p><strong>注意！DISTINCT 关键字无法应用于部分列，只能用用于你查询的所有列！</strong></p>
+<h2 id="limit关键字分页基础限制结果行数">LIMIT关键字（分页基础）（限制结果行数）</h2>
+<p>如果想要限制输出的结果的行数，那么我们可以使用 LIMIT 关键字，使用方法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT 数据库.列1, 数据库.列2</span><br><span class="line">FROM 数据库</span><br><span class="line">LIMIT 5;</span><br></pre></td></tr></table></figure>
+<p>以上代码表示输出行数不超过 5 行</p>
+<h2 id="order-by子句结果排序升序asc降序desc">ORDER BY子句（结果排序）（升序ASC/降序DESC）</h2>
+<blockquote>
+<p>其实，检索出的数据并不是以纯粹的随机顺序显示的。如果不排序，数据一般将以它在底层表中出现的顺序显示。 ——《MySQL必知必会》</p>
+</blockquote>
+<p>因此，为了确保我们想得到的结果按顺序输出，我们可以用 ORDER BY 字句，使用方法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT 数据库.列1, 数据库.列2</span><br><span class="line">FROM 数据库</span><br><span class="line">ORDER BY 数据库.列1</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT 数据库.列1, 数据库.列2</span><br><span class="line">FROM 数据库</span><br><span class="line">ORDER BY 数据库.列1 DESC, 数据库.列2</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<ol type="1">
+<li>ORDER BY 默认升序排序（隐藏关键字：ASC）；</li>
+<li>如果想在多个列上进行降序排序，必须对每个列指定 DESC 关键字。</li>
+</ol>
+<p><strong>注意：</strong></p>
+<blockquote>
+<p>在给出 ORDER BY 子句时，应该保证它位于 FROM 子句之后。如果使用 LIMIT ，它必须位于 ORDER BY 之后。使用子句的次序不对将产生错误消息。——《MySQL必知必会》</p>
+</blockquote>
+<h2 id="where子句数据筛选">WHERE子句（数据筛选）</h2>
+<p>因为当我们查询数据的时候，我们往往只需要符合我们要求的部分数据，而不是所有数据，因此我们需要对数据进行过滤。</p>
+<p>对数据进行过滤，我们一般使用 WHERE 子句，使用方法如下（例）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT 数据库.列1, 数据库.列2</span><br><span class="line">FROM 数据库</span><br><span class="line">WHERE 数据库.列1 = XXX</span><br></pre></td></tr></table></figure>
+<p><em>注：这里的 XXX 指代数据内容</em></p>
+<p>以上就是筛选出了 数据库.列1 的内容为 XXX 时的 数据库.列1 和 数据库.列2</p>
+<h3 id="基础操作符">基础操作符</h3>
+<table>
+<thead>
+<tr class="header">
+<th>操作符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>=</td>
+<td>等于</td>
+</tr>
+<tr class="even">
+<td>&lt;&gt;</td>
+<td>不等于</td>
+</tr>
+<tr class="odd">
+<td>!=</td>
+<td>不等于</td>
+</tr>
+<tr class="even">
+<td>&lt;</td>
+<td>小于</td>
+</tr>
+<tr class="odd">
+<td>&lt;=</td>
+<td>小于等于</td>
+</tr>
+<tr class="even">
+<td>&gt;</td>
+<td>大于</td>
+</tr>
+<tr class="odd">
+<td>&gt;=</td>
+<td>大于等于</td>
+</tr>
+<tr class="even">
+<td>BETWEEN</td>
+<td>在指定的两个值之间</td>
+</tr>
+</tbody>
+</table>
+<h3 id="空值检查is-nullis-not-null">空值检查：<code>IS NULL</code>/<code>IS NOT NULL</code></h3>
+<p>如果要检查某一列是否为 NULL，可以这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WHERE col IS NULL</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WHERE col IS NOT NULL</span><br></pre></td></tr></table></figure>
+<h3 id="逻辑操作符andorinnot">逻辑操作符（AND/OR/IN/NOT）</h3>
+<table>
+<thead>
+<tr class="header">
+<th>操作符</th>
+<th>核心逻辑</th>
+<th>适用场景</th>
+<th>注意事项</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AND</td>
+<td>同时满足多个条件</td>
+<td>多条件必须同时成立</td>
+<td>优先级高于 OR，混用需加括号</td>
+</tr>
+<tr class="even">
+<td>OR</td>
+<td>满足任意一个条件</td>
+<td>多条件任选其一</td>
+<td>优先级低于 AND，避免单独使用复杂逻辑</td>
+</tr>
+<tr class="odd">
+<td>IN</td>
+<td>匹配多个指定值中的任意一个</td>
+<td>替代多个 OR，简化条件</td>
+<td>列表值需类型一致，字符串加单引号</td>
+</tr>
+<tr class="even">
+<td>NOT</td>
+<td>否定其后的条件</td>
+<td>筛选“不满足某条件”的记录</td>
+<td>仅否定紧跟的条件，可与多种操作符结合</td>
+</tr>
+</tbody>
+</table>
+<h4 id="and-操作符">AND 操作符</h4>
+<p>作用：筛选同时满足所有指定条件的记录（逻辑“与”），多个条件需全部成立才会被匹配。</p>
+<p>用法示例：假设员工表 <code>employees</code> 新增字段 <code>department</code>（部门）、<code>salary</code>（薪资），数据如下：</p>
+<table>
+<thead>
+<tr class="header">
+<th>employee_id</th>
+<th>name</th>
+<th>department</th>
+<th>salary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>张三</td>
+<td>技术部</td>
+<td>6000</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>李四</td>
+<td>市场部</td>
+<td>4500</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>王五</td>
+<td>技术部</td>
+<td>5500</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>赵六</td>
+<td>人事部</td>
+<td>5000</td>
+</tr>
+</tbody>
+</table>
+<p>需求：查询“技术部且薪资大于 5000 元”的员工（同时满足两个条件）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE department = &#x27;技术部&#x27; AND salary &gt; 5000;</span><br></pre></td></tr></table></figure>
+<p>结果返回 张三（6000 元）、王五（5500 元），只有同时符合“技术部”和“薪资&gt;5000”才会被筛选。</p>
+<p>注意：AND 可连接任意多个条件，所有条件必须同时成立。</p>
+<h4 id="or-操作符">OR 操作符</h4>
+<p>作用：筛选满足任意一个指定条件的记录（逻辑“或”），只要有一个条件成立就会被匹配。</p>
+<p>用法示例：查询“市场部 或 薪资大于 5500 元”的员工（满足一个条件即可）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE department = &#x27;市场部&#x27; OR salary &gt; 5500;</span><br></pre></td></tr></table></figure>
+<p>结果返回 张三（薪资 6000&gt;5500）、李四（市场部），两者满足其一即匹配。</p>
+<p>注意：OR 连接的条件是“任选其一”，无需全部满足；但需注意与 AND 混用的优先级问题（下文详解）。</p>
+<h4 id="and-与-or-的运行顺序">AND 与 OR 的运行顺序</h4>
+<p>核心规则：AND 的优先级高于 OR，数据库会先解析 AND 连接的条件，再解析 OR 连接的条件。</p>
+<p>易错示例（未加括号）： 需求：查询“技术部且薪资&gt;5000” 或 “市场部且薪资&gt;4000”的员工，若直接写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- 错误写法：逻辑被优先级打乱</span><br><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE department = &#x27;技术部&#x27; AND salary &gt; 5000 OR department = &#x27;市场部&#x27; AND salary &gt; 4000;</span><br></pre></td></tr></table></figure>
+<p>数据库解析顺序：先执行两个 AND 条件（<code>技术部+薪资&gt;5000</code>、<code>市场部+薪资&gt;4000</code>），再用 OR 连接结果，这个例子恰好结果正确，但下面的情况会出错：</p>
+<p>反例（未加括号导致逻辑错误）： 需求：查询“（技术部 或 市场部）且薪资&gt;5000”的员工，若漏写括号：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- 错误写法：优先级导致逻辑偏离</span><br><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE department = &#x27;技术部&#x27; OR department = &#x27;市场部&#x27; AND salary &gt; 5000;</span><br></pre></td></tr></table></figure>
+<p>数据库解析为：<code>技术部</code> 或 <code>（市场部 且 薪资&gt;5000）</code>，结果会返回 张三（技术部）、王五（技术部）、无市场部员工（李四薪资 4500&lt;5000），但实际需求是“技术部/市场部中薪资&gt;5000的”，正确结果应只有张三、王五（市场部无符合薪资的），虽结果巧合一致，但逻辑是错的，换个数据就会出问题。</p>
+<p>正确写法（加括号明确优先级）： 用括号 <code>()</code> 强制改变执行顺序，先解析括号内的 OR 条件，再解析 AND 条件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE (department = &#x27;技术部&#x27; OR department = &#x27;市场部&#x27;) AND salary &gt; 5000;</span><br></pre></td></tr></table></figure>
+<p>解析顺序：先确定“技术部或市场部”的员工（张三、李四、王五），再筛选其中“薪资&gt;5000”的（张三、王五），完全符合需求。</p>
+<p>注意：当 AND 和 OR 同时出现时，务必用括号明确逻辑分组，避免因优先级导致结果错误。</p>
+<h4 id="in-操作符">IN 操作符</h4>
+<p>作用：筛选“字段值匹配多个指定值中的任意一个”的记录，等价于多个 OR 条件的组合，但更简洁、可读性更高。</p>
+<p>用法示例：查询“部门为技术部、市场部、人事部”的员工（匹配多个部门中的任意一个）：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 用 IN 实现（简洁）</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">WHERE</span> department <span class="keyword">IN</span> (<span class="string">&#x27;技术部&#x27;</span>, <span class="string">&#x27;市场部&#x27;</span>, <span class="string">&#x27;人事部&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 等价于 OR 写法（繁琐，多个值时易出错）</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">WHERE</span> department <span class="operator">=</span> <span class="string">&#x27;技术部&#x27;</span> <span class="keyword">OR</span> department <span class="operator">=</span> <span class="string">&#x27;市场部&#x27;</span> <span class="keyword">OR</span> department <span class="operator">=</span> <span class="string">&#x27;人事部&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>两种写法结果一致，均返回所有员工（因示例中只有这三个部门）。</p>
+<p>IN 操作符的优势在于：</p>
+<ul>
+<li>比多个 OR 更高效（数据库优化器对 IN 的处理更优）。</li>
+<li>实际在项目场景下， 我们要筛选的字段值往往从另一个查询中得到，而 IN 操作符支持子查询；</li>
+</ul>
+<p><strong>注意</strong>：IN 列表中的值需用逗号分隔，字符串需加单引号（<code>' '</code>）。</p>
+<h4 id="not-操作符">NOT 操作符</h4>
+<p>作用：否定其后的条件（逻辑“非”），筛选不满足指定条件的记录，可与 IN、BETWEEN、IS NULL 等结合使用。</p>
+<p>用法示例：</p>
+<ol type="1">
+<li>与 IN 结合：查询“部门不在技术部、市场部”的员工：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE department NOT IN (&#x27;技术部&#x27;, &#x27;市场部&#x27;);</span><br></pre></td></tr></table></figure>
+<p>结果返回 赵六（人事部）。</p>
+<ol start="2" type="1">
+<li>与 BETWEEN 结合：查询“薪资不在 4000-5500 元之间”的员工：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE salary NOT BETWEEN 4000 AND 5500;</span><br></pre></td></tr></table></figure>
+<p>结果返回 张三（6000 元，高于 5500）。</p>
+<ol start="3" type="1">
+<li>与 IS NULL 结合：查询“邮箱不为空（IS NOT NULL）”的员工（补充之前的空值检查）：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE email NOT IS NULL; -- 等价于 WHERE email IS NOT NULL，两种写法均可</span><br></pre></td></tr></table></figure>
+<p>结果返回邮箱字段有明确值的员工。</p>
+<p>注意：</p>
+<ul>
+<li>NOT 仅否定紧跟其后的一个条件（若需否定多个条件，需结合括号）；</li>
+<li>与 IN 结合时，<code>NOT IN</code> 会排除所有匹配 IN 列表的值，包括 NULL（若 IN 列表中有 NULL，<code>NOT IN</code> 可能返回空结果，需避免）。</li>
+</ul>
+<h3 id="like与通配符_模糊查询">LIKE与通配符（%\\_）(模糊查询)</h3>
+<h4 id="like-操作符">LIKE 操作符</h4>
+<p>作用：结合通配符实现<strong>模糊查询</strong>，筛选“部分符合字符串格式”的记录（无需精准匹配完整字符串），适用于字符串类型字段（如姓名、邮箱、部门名等），支持 <code>%</code> 和 <code>_</code> 两种核心通配符，且可通过转义符匹配实际存在的通配符字符。 <strong>具体使用方法如下 ↓</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>通配符</th>
+<th>核心作用</th>
+<th>适用场景</th>
+<th>注意事项</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>%</code></td>
+<td>匹配任意数量的任意字符（含 0 个）</td>
+<td>开头/结尾/包含匹配、长度不固定场景</td>
+<td>开头使用可能影响索引效率</td>
+</tr>
+<tr class="even">
+<td><code>_</code></td>
+<td>匹配单个任意字符</td>
+<td>固定长度、特定位置字符匹配</td>
+<td>严格匹配 1 个字符，不能多也不能少</td>
+</tr>
+<tr class="odd">
+<td>转义符</td>
+<td>匹配实际的 <code>%</code> 或 <code>_</code></td>
+<td>字符串中包含通配符字符的场景</td>
+<td>默认用 <code>\</code>，可通过 <code>ESCAPE</code> 自定义</td>
+</tr>
+</tbody>
+</table>
+<h4 id="百分号通配符">百分号（%）通配符</h4>
+<p>作用：匹配<strong>任意数量的任意字符</strong>（包括 <span class="math inline">0</span> 个字符，即空字符串），是 <code>LIKE</code> 中最常用的通配符，可放在字符串开头、中间或结尾。</p>
+<p>用法示例（基于 <code>employees</code> 表的 <code>name</code>（姓名）、<code>email</code>（邮箱）字段）：</p>
+<ol type="1">
+<li>开头匹配：查询“名字以‘张’开头”的员工</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE name LIKE &#x27;张%&#x27;;</span><br></pre></td></tr></table></figure>
+<p>结果返回 张三（姓名为“张三”），若存在“张伟明”“张丽”等名字以“张”开头的员工，也会被匹配。</p>
+<ol start="2" type="1">
+<li>结尾匹配：查询“邮箱以‘<span class="citation" data-cites="qq.com">@qq.com</span>’结尾”的员工</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE email LIKE &#x27;%@qq.com&#x27;;</span><br></pre></td></tr></table></figure>
+<p>结果返回所有邮箱后缀为“<span class="citation" data-cites="qq.com">@qq.com</span>”的员工，无论邮箱前缀长度如何。</p>
+<ol start="3" type="1">
+<li>包含匹配：查询“姓名中包含‘三’字”的员工</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE name LIKE &#x27;%三%&#x27;;</span><br></pre></td></tr></table></figure>
+<p>结果返回 张三（姓名含“三”），若存在“李三丰”“王三”等员工，也会被匹配。</p>
+<ol start="4" type="1">
+<li>匹配空字符串：查询“部门字段为空字符串”的员工（<strong>注意</strong>：空字符串 <code>''</code> 不同于 NULL）</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE department LIKE &#x27;&#x27;;</span><br></pre></td></tr></table></figure>
+<p>结果返回部门字段填写为空字符串的员工，NULL 不会被匹配（NULL 需用 <code>IS NULL</code> 判断）。</p>
+<p>注意事项：</p>
+<ul>
+<li><code>%</code> 放在字符串<strong>开头</strong>时（如 <code>'%三%'</code>），MySQL 无法使用字段索引，大表查询时效率较低，尽量将 <code>%</code> 放在结尾（如 <code>'张%'</code>）以利用索引；</li>
+<li><code>%</code> 可匹配任意字符，包括数字、字母、符号、空格等，无字符类型限制；</li>
+<li><strong>!!!!!</strong> 若需匹配“字段值为空”，需区分“空字符串”（<code>LIKE ''</code>）和“NULL”（<code>IS NULL</code>），<code>%</code> 无法匹配 NULL。</li>
+</ul>
+<h4 id="下划线_通配符">下划线（_）通配符</h4>
+<p>作用：匹配<strong>单个任意字符</strong>（严格占 1 个字符位置，不能多也不能少），适用于明确字符串长度或特定位置字符的匹配场景。</p>
+<p>用法示例：</p>
+<ol type="1">
+<li>固定长度匹配：查询“姓名为 2 个字符且以‘张’开头”的员工</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE name LIKE &#x27;张_&#x27;;</span><br></pre></td></tr></table></figure>
+<p>结果返回 张三（姓名为 2 字符，以“张”开头），若存在“张丽”“张涛”等 2 字符姓名员工也会被匹配，但“张伟明”（3 字符）不会被匹配。</p>
+<ol start="2" type="1">
+<li>特定位置匹配：查询“手机号为 11 位数字且第 4-5 位为‘86’”的员工（假设 <code>phone</code> 为字符串类型）</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE phone LIKE &#x27;___86______&#x27;;</span><br></pre></td></tr></table></figure>
+<p>解析：<code>___</code> 匹配前 3 位任意数字，<code>86</code> 是固定字符，<code>______</code> 匹配后 6 位任意数字，整体严格匹配 11 位手机号，且第 4-5 位为“86”。</p>
+<ol start="3" type="1">
+<li>组合匹配：查询“邮箱前缀为 3 个字符，且后缀为‘<span class="citation" data-cites="qq.com">@qq.com</span>’”的员工</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE email LIKE &#x27;___@qq.com&#x27;;</span><br></pre></td></tr></table></figure>
+<p>结果返回邮箱格式为“aaa@qq.com”“abc@qq.com”等前缀为 3 字符的员工。</p>
+<p>注意事项：</p>
+<ul>
+<li><code>_</code> 仅匹配<strong>1 个字符</strong>，若需匹配 n 个字符，需写 n 个 <code>_</code>（如匹配 3 个字符需 <code>___</code>）；</li>
+<li>无法匹配 0 个字符（空字符串），也无法匹配超过 1 个字符的内容，匹配长度严格限制；</li>
+<li>与 <code>%</code> 不同，<code>_</code> 即使放在字符串开头，也可能利用索引（若字段有前缀索引），但效率仍低于精准匹配。</li>
+</ul>
+<h4 id="转义通配符">转义通配符</h4>
+<p>默认情况下，<code>%</code> 和 <code>_</code> 是通配符，若需匹配字符串中<strong>实际存在的 <code>%</code> 或 <code>_</code> 字符</strong>（而非作为通配符使用），需用「转义符」处理，避免 MySQL 将其解析为通配符。</p>
+<p>核心用法：</p>
+<ol type="1">
+<li>默认转义符（<code>\</code>）：在需匹配的 <code>%</code> 或 <code>_</code> 前加 <code>\</code>，表示该字符是普通字符而非通配符。</li>
+<li>自定义转义符（<code>ESCAPE</code>）：若默认转义符 <code>\</code> 与业务字符冲突，可通过 <code>ESCAPE</code> 指定自定义转义符（如 <code>#</code>、<code>$</code> 等）。</li>
+</ol>
+<p>用法示例：</p>
+<ol type="1">
+<li>匹配含 <code>%</code> 的字符串：查询“备注字段包含‘5%’（如‘折扣 5%’）”的员工</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- 默认转义符 \</span><br><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE remark LIKE &#x27;%5\%&#x27;;</span><br></pre></td></tr></table></figure>
+<p>结果返回备注中包含“5%”的员工，<code>\%</code> 表示匹配实际的 <code>%</code> 字符，而非通配符。</p>
+<ol start="2" type="1">
+<li>匹配含 <code>_</code> 的字符串：查询“用户名包含‘a_b’（如‘user_a_b’）”的员工</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- 默认转义符 \</span><br><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE username LIKE &#x27;%a\_b%&#x27;;</span><br></pre></td></tr></table></figure>
+<p>结果返回用户名中包含“a_b”的员工，<code>\_</code> 表示匹配实际的 <code>_</code> 字符，而非通配符。</p>
+<ol start="3" type="1">
+<li>自定义转义符：查询“备注包含‘8%’”的员工，用 <code>#</code> 作为转义符</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE remark LIKE &#x27;%8#%&#x27; ESCAPE &#x27;#&#x27;;</span><br></pre></td></tr></table></figure>
+<p>解析：<code>ESCAPE '#'</code> 声明 <code>#</code> 为转义符，<code>#%</code> 表示匹配实际的 <code>%</code> 字符，效果与 <code>\%</code> 一致。</p>
+<p>注意事项：</p>
+<ul>
+<li>转义符仅对紧跟其后的 1 个字符生效，若需匹配多个 <code>%</code> 或 <code>_</code>，需逐个转义（如匹配“5%_”需写 <code>5\%\_</code>）；</li>
+<li>自定义转义符需选择业务中不常用的字符（如 <code>#</code>、<code>&amp;</code>），避免与字符串中的普通字符冲突；</li>
+<li>若未转义直接写 <code>LIKE '%5%%'</code>，MySQL 会将第二个 <code>%</code> 解析为通配符，导致匹配“包含‘5’且后面任意字符”的结果，而非“包含‘5%’”。</li>
+</ul>
+<h3 id="regexp正则表达式复杂匹配">REGEXP（正则表达式）(复杂匹配)</h3>
+<p>REGEXP（或 RLIKE，两者完全等价）用于<strong>复杂模糊匹配</strong>，功能比 LIKE 更灵活，支持按“模式”筛选字符串，其作用是匹配文本，将一个模式（正则表达式）与一个文本串进行比较。需配合 WHERE 子句使用，只要该字段里包含这一段内容，就会被匹配到。</p>
+<p><strong>注意！！！</strong></p>
+<ul>
+<li>MySQL中的正则表达式匹配不区分大小写（即，大写和小写都匹配）。为区分大小写，可使用BINARY关键字，如<code>WHERE prod_name REGEXP BINARY 'JetPack .000'</code>。</li>
+</ul>
+<h4 id="使用-.-匹配单个任意字符">使用 . 匹配单个任意字符</h4>
+<p>作用：匹配<strong>1个任意字符</strong>（包括字母、数字、符号、空格），等价于 LIKE 操作符的 <code>_</code>，但可与其他正则规则组合使用。</p>
+<p>用法示例（基于 <code>employees</code> 表 <code>name</code> 字段）： 需求：查询“姓名为2个字符且以‘张’开头”的员工：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE name REGEXP &#x27;^张.$&#x27;;</span><br></pre></td></tr></table></figure>
+<p>结果返回 张三（姓名为“张三”，<code>张</code> 后紧跟1个字符）；若存在“张丽”“张涛”等2字姓名员工，也会被匹配（`.’ 匹配第2个任意字符）。</p>
+<p>补充示例：查询“邮箱前缀为任意字符，中间包含‘xxx’”的员工：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE email REGEXP &#x27;.xxx.&#x27;;</span><br></pre></td></tr></table></figure>
+<p>解析：<code>.' 匹配前缀任意1个字符，</code>xxx<code>是固定字符，最后一个</code>.’ 匹配后缀任意1个字符，整体匹配“包含‘xxx’且前后至少各有1个字符”的邮箱。</p>
+<h4 id="使用-匹配多个模式逻辑或">使用 | 匹配多个模式（逻辑“或”）</h4>
+<p>作用：匹配<strong>多个指定模式中的任意一个</strong>，等价于 OR 条件，适合同时筛选多种符合规则的结果，比多个 OR 更简洁。</p>
+<p>用法示例（基于 <code>employees</code> 表 <code>department</code> 字段）： 需求：查询“部门为技术部或市场部”的员工：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE department REGEXP &#x27;技术部|市场部&#x27;;</span><br></pre></td></tr></table></figure>
+<p>结果返回 张三（技术部）、李四（市场部），匹配两个模式中的任意一个即可。</p>
+<p>补充示例：查询“姓名包含‘张’或‘李’”的员工：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE name REGEXP &#x27;张|李&#x27;;</span><br></pre></td></tr></table></figure>
+<p>结果返回 张三（含“张”）、若存在“李四”“李白”等含“李”的员工，也会被匹配。</p>
+<p>注意：<code>|</code> 匹配的是“整个模式”，若需匹配“某字段开头为A或B”，需结合括号（如 <code>^(张|李)</code>），避免匹配错误。</p>
+<h4 id="使用-匹配指定字符集中的任意一个">使用 [] 匹配指定字符集中的任意一个</h4>
+<p>作用：匹配<strong>方括号内的任意一个字符</strong>（仅匹配 <span class="math inline">1</span> 个），可替代多个 <code>|</code>，简化字符匹配规则。</p>
+<p>用法示例（基于 <code>employees</code> 表 <code>name</code> 字段）： 需求：查询“姓名首字为‘张’或‘李’”的员工：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE name REGEXP &#x27;^[张李]&#x27;;</span><br></pre></td></tr></table></figure>
+<p>解析：<code>^</code> 是定位符（后文详解），表示“字符串开头”，<code>[张李]</code> 匹配开头为“张”或“李”的任意一个字符，结果返回 张三（首字“张”）、若存在“李四”（首字“李”）也会被匹配。</p>
+<p>补充示例：查询“手机号第2位为3或5”的员工（假设 <code>phone</code> 为字符串类型）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE phone REGEXP &#x27;^1[35]&#x27;;</span><br></pre></td></tr></table></figure>
+<p>解析：<code>^1</code> 表示手机号以1开头，<code>[35]</code> 匹配第2位为3或5，比如“138xxxx”“159xxxx”都会被匹配。</p>
+<h4 id="使用---在-内定义字符范围">使用 - 在 [] 内定义字符范围</h4>
+<p>作用：在 <code>[]</code> 内用 <code>-</code> 定义<strong>连续的字符范围</strong>，简化多个连续字符的匹配（如字母、数字范围），无需逐个列出字符。</p>
+<p>用法示例：</p>
+<ol type="1">
+<li>匹配数字范围（基于 <code>employees</code> 表 <code>salary</code> 字段）： 需求：查询“薪资开头为5或6”的员工（薪资为数字类型，REGEXP 会自动转为字符串匹配）：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE salary REGEXP &#x27;^[5-6]&#x27;;</span><br></pre></td></tr></table></figure>
+<p>结果返回 张三（6000）、王五（5500）、赵六（5000），<code>[5-6]</code> 匹配开头为5或6的数字。</p>
+<ol start="2" type="1">
+<li>匹配字母范围（基于 <code>employees</code> 表 <code>email</code> 字段）： 需求：查询“邮箱前缀包含小写字母a-f”的员工：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE email REGEXP &#x27;[a-f]&#x27;;</span><br></pre></td></tr></table></figure>
+<p>结果返回邮箱中包含a、b、c、d、e、f任意一个小写字母的员工，<code>[a-f]</code> 表示a到f的连续小写字母。</p>
+<ol start="3" type="1">
+<li>组合范围：查询“姓名包含大写字母A-F或数字0-5”的员工：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE name REGEXP &#x27;[A-F0-5]&#x27;;</span><br></pre></td></tr></table></figure>
+<p>解析：<code>[A-F0-5]</code> 同时匹配A-F的大写字母和0-5的数字，无需分开写 <code>[A-F]|[0-5]</code>。</p>
+<h4 id="使用-匹配特殊字符转义">使用 <code>\\</code> 匹配特殊字符（转义）</h4>
+<p>作用：正则表达式中部分字符（如 <code>.</code>、<code>*</code>、<code>+</code>、<code>?</code> 等）是“特殊元字符”，若需匹配这些字符本身（如邮箱中的 <code>.</code>、网址中的 <code>?</code>），需用 <code>\\</code> 转义（MySQL 中需双重反斜杠，第一层转义 MySQL 本身，第二层转义正则表达式）。</p>
+<p>用法示例（基于 <code>employees</code> 表 <code>email</code> 字段）： 需求：查询“邮箱后缀为‘.com’”的员工（匹配实际的 <code>.</code> 字符）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE email REGEXP &#x27;\\.com$&#x27;;</span><br></pre></td></tr></table></figure>
+<p>解析：<code>\\.</code> 转义后匹配实际的 <code>.</code> 字符（若直接写 <code>.</code>，会被解析为“匹配任意字符”），<code>$</code> 是定位符，表示“字符串结尾”，结果返回所有邮箱以 <code>.com</code> 结尾的员工。</p>
+<p>补充示例：匹配包含 <code>*</code> 字符的备注（基于 <code>remark</code> 字段）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE remark REGEXP &#x27;\\*&#x27;;</span><br></pre></td></tr></table></figure>
+<p>结果返回备注中包含 <code>*</code> 字符的员工（如“折扣*8折”），<code>\\*</code> 转义后匹配实际的 <code>*</code> 字符。</p>
+<h4 id="匹配字符类预设常用字符集">匹配字符类（预设常用字符集）</h4>
+<p>作用：正则提供预设的“字符类”（以 <code>[:xxx:]</code> 形式），简化常用字符集的书写（如数字、字母、空白字符等），需放在 <code>[]</code> 内使用。</p>
+<p>用法示例（基于 <code>employees</code> 表相关字段）：</p>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 45%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>字符类</th>
+<th>示例SQL</th>
+<th>结果说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>[:digit:]</code></td>
+<td><code>SELECT * FROM employees WHERE phone REGEXP '^[:digit:]{11}$';</code></td>
+<td><code>[:digit:]</code> 匹配任意数字，<code>{11}</code> 限制11位，仅返回11位纯数字手机号</td>
+</tr>
+<tr class="even">
+<td><code>[:lower:]</code></td>
+<td><code>SELECT * FROM employees WHERE name REGEXP '[:lower:]';</code></td>
+<td>返回姓名中包含a-z任意小写字母的员工（如“Zhang三”）</td>
+</tr>
+<tr class="odd">
+<td><code>[:upper:]</code></td>
+<td><code>SELECT * FROM employees WHERE email REGEXP '[:upper:]';</code></td>
+<td>返回邮箱中包含A-Z任意大写字母的员工（如“ZHANG@xxx.com”）</td>
+</tr>
+<tr class="even">
+<td><code>[:space:]</code></td>
+<td><code>SELECT * FROM employees WHERE remark REGEXP '[:space:]';</code></td>
+<td>返回备注中包含空格、制表符等空白字符的员工（如“技术部 核心员工”）</td>
+</tr>
+<tr class="odd">
+<td><code>[:alnum:]</code></td>
+<td><code>SELECT * FROM employees WHERE username REGEXP '^[:alnum:]+$';</code></td>
+<td><code>[:alnum:]</code> 匹配字母+数字，<code>+</code> 表示至少1个，仅返回纯字母数字的用户名</td>
+</tr>
+<tr class="even">
+<td><code>[:alpha:]</code></td>
+<td><code>SELECT * FROM employees WHERE username REGEXP '^[:alpha:]+$';</code></td>
+<td><code>[:alpha:]</code> 匹配任意大小写字母（同<code>[a-zA-Z]</code>），仅返回纯字母用户名（如“Zhang”“Li”“WANG”），不匹配含数字/符号的用户名</td>
+</tr>
+<tr class="odd">
+<td><code>[:blank:]</code></td>
+<td><code>SELECT * FROM employees WHERE remark REGEXP '[:blank:]';</code></td>
+<td><code>[:blank:]</code> 仅匹配空格（<code></code>）和制表符（<code>\t</code>），返回备注中含这两种字符的员工</td>
+</tr>
+<tr class="even">
+<td><code>[:cntrl:]</code></td>
+<td><code>SELECT * FROM employees WHERE remark REGEXP '[:cntrl:]';</code></td>
+<td><code>[:cntrl:]</code> 匹配ASCII 0-31（如<code>\n</code>、<code>\r</code>）和127的控制字符（不可见），返回备注中含这类字符的员工</td>
+</tr>
+<tr class="odd">
+<td><code>[:graph:]</code></td>
+<td><code>SELECT * FROM employees WHERE username REGEXP '^[:graph:]+$';</code></td>
+<td><code>[:graph:]</code> 匹配字母、数字、符号（无空格），仅返回无空格的可见字符用户名（如“Zhang123!”“Li_456”）</td>
+</tr>
+<tr class="even">
+<td><code>[:print:]</code></td>
+<td><code>SELECT * FROM employees WHERE remark REGEXP '^[:print:]*$';</code></td>
+<td><code>[:print:]</code> 匹配所有可打印字符（字母、数字、符号、空格），不含控制字符，返回备注中无隐藏控制字符的员工</td>
+</tr>
+<tr class="odd">
+<td><code>[:punct:]</code></td>
+<td><code>SELECT * FROM employees WHERE username REGEXP '[:punct:]';</code></td>
+<td><code>[:punct:]</code> 匹配标点符号（如<code>_</code>、<code>-</code>、<code>!</code>、<code>@</code>），返回用户名含这类符号的员工（如“Zhang_123”“Li-Min”）</td>
+</tr>
+<tr class="even">
+<td><code>[:xdigit:]</code></td>
+<td><code>SELECT * FROM employees WHERE device_no REGEXP '^[:xdigit:]{8}$';</code></td>
+<td><code>[:xdigit:]</code> 匹配十六进制数字（0-9、a-f、A-F），<code>{8}</code> 限制8位，仅返回8位纯十六进制设备编号</td>
+</tr>
+</tbody>
+</table>
+<p>注意：字符类必须放在 <code>[]</code> 内（如 <code>[:digit:]</code> 等价于 <code>[0-9]</code>），单独使用无效。</p>
+<h4 id="使用重复元字符匹配多个字符">使用重复元字符匹配多个字符</h4>
+<p>作用：控制前一个字符/模式的匹配次数（如0次、1次、多次），无需重复书写相同规则，简化复杂匹配。</p>
+<p>用法示例（基于 <code>employees</code> 表相关字段）：</p>
+<table>
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 46%" />
+<col style="width: 46%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>重复元字符</th>
+<th>示例SQL（需求）</th>
+<th>结果说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>*</code></td>
+<td>查询姓名以“张”开头，后面可跟0个或多个字符的员工：<br><code>SELECT * FROM employees WHERE name REGEXP '^张.*';</code></td>
+<td>返回“张”“张三”“张伟明”等（包括仅“张”的姓名）</td>
+</tr>
+<tr class="even">
+<td><code>+</code></td>
+<td>查询姓名以“张”开头，后面至少跟1个字符的员工：<br><code>SELECT * FROM employees WHERE name REGEXP '^张+';</code></td>
+<td>返回“张三”“张伟明”（排除仅“张”的姓名），<code>+</code> 表示至少1次匹配</td>
+</tr>
+<tr class="odd">
+<td><code>?</code></td>
+<td>查询姓名为“张”或“张三”的员工：<br><code>SELECT * FROM employees WHERE name REGEXP '^张三?';</code></td>
+<td><code>?</code> 匹配前一个字符“三”0次或1次，即匹配“张”或“张三”</td>
+</tr>
+<tr class="even">
+<td><code>{n}</code></td>
+<td>查询手机号为11位数字的员工：<br><code>SELECT * FROM employees WHERE phone REGEXP '^[0-9]{11}$';</code></td>
+<td><code>{11}</code> 表示匹配前一个模式（数字）恰好11次，仅返回11位手机号</td>
+</tr>
+<tr class="odd">
+<td><code>{n,}</code></td>
+<td>查询姓名至少3个字符的员工：<br><code>SELECT * FROM employees WHERE name REGEXP '^.{3,}$';</code></td>
+<td><code>{3,}</code> 表示匹配任意字符至少3次，返回3字及以上姓名（如“张伟明”）</td>
+</tr>
+<tr class="even">
+<td><code>{n,m}</code></td>
+<td>查询姓名为2-4个字符的员工：<br><code>SELECT * FROM employees WHERE name REGEXP '^.{2,4}$';</code></td>
+<td><code>{2,4}</code> 表示匹配任意字符2-4次，返回2-4字姓名（如“张三”“张伟明”）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="使用定位符匹配位置">使用定位符匹配位置</h4>
+<p>作用：匹配“字符串的位置”（而非具体字符），如开头、结尾、单词边界，用于精准控制匹配的位置范围。</p>
+<p>用法示例（基于 <code>employees</code> 表相关字段）：</p>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 43%" />
+<col style="width: 43%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>定位符</th>
+<th>示例SQL（需求）</th>
+<th>结果说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>^</code>（文本开头）</td>
+<td>查询部门以“技术”开头的员工：<br><code>SELECT * FROM employees WHERE department REGEXP '^技术';</code></td>
+<td>返回“技术部”（以“技术”开头），若存在“技术支持部”也会被匹配</td>
+</tr>
+<tr class="even">
+<td><code>$</code>（文本结尾）</td>
+<td>查询邮箱以“<span class="citation" data-cites="163.com">@163.com</span>”结尾的员工：<br><code>SELECT * FROM employees WHERE email REGEXP '@163.com$';</code></td>
+<td>仅返回邮箱后缀为“<span class="citation" data-cites="163.com">@163.com</span>”的员工，避免匹配“xxx@163.com.cn”</td>
+</tr>
+<tr class="odd">
+<td><code>[[:&lt;:]]</code>（词开头）</td>
+<td>查询备注中包含“核心”单词（独立单词）的员工：<br><code>SELECT * FROM employees WHERE remark REGEXP '[[:&lt;:]]核心[[:&gt;:]]';</code></td>
+<td>仅匹配“核心”作为独立单词（如“核心员工”），不匹配“非核心员工”“核心技术”（“核心”非独立单词）</td>
+</tr>
+<tr class="even">
+<td><code>[[:&gt;:]]</code>（词结尾）</td>
+<td>同上，配合 <code>[[:&lt;:]]</code> 实现独立单词匹配</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>注意：<code>^</code> 和 <code>$</code> 匹配整个字符串的开头/结尾，<code>[[:&lt;:]]</code> 和 <code>[[:&gt;:]]</code> 匹配单词的开头/结尾（单词以空白字符或特殊符号分隔）。</p>
+<h4 id="的双重用途">^ 的双重用途</h4>
+<p>说明：<code>^</code> 是正则中唯一具有“双重含义”的元字符，含义由其位置决定：</p>
+<ol type="1">
+<li>当 <code>^</code> 在 <strong><code>[]</code> 外部</strong>时：作为定位符，匹配“整个字符串的开头”（如 3.5.5.8 中的示例）；</li>
+<li>当 <code>^</code> 在 <strong><code>[]</code> 内部</strong>时：表示“否定字符集”，匹配“不在括号内的任意一个字符”。</li>
+</ol>
+<p>用法示例：</p>
+<ol type="1">
+<li><code>^</code> 在 <code>[]</code> 外部（定位符）： 需求：查询姓名以“王”开头的员工：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE name REGEXP &#x27;^王&#x27;;</span><br></pre></td></tr></table></figure>
+<p>结果返回姓名以“王”开头的员工（如“王五”）。</p>
+<ol start="2" type="1">
+<li><code>^</code> 在 <code>[]</code> 内部（否定字符集）： 需求：查询姓名首字<strong>不是</strong>“张”“李”“王”的员工：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE name REGEXP &#x27;^[^张李王]&#x27;;</span><br></pre></td></tr></table></figure>
+<p>解析：<code>^</code> 表示字符串开头，<code>[^张李王]</code> 表示“首字不在张、李、王中的任意一个字符”，结果返回 赵六（首字“赵”）。</p>
+<p>补充示例：查询手机号<strong>不含</strong>数字3的员工：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees</span><br><span class="line">WHERE phone REGEXP &#x27;[^3]&#x27;;</span><br></pre></td></tr></table></figure>
+<p>结果返回手机号中没有数字3的员工，<code>[^3]</code> 匹配任意不是3的字符。</p>
+<p>注意：<code>[^...]</code> 仅否定括号内的字符集，仍匹配1个任意字符，并非“不包含该字符集”（若需“不包含某字符”，需结合重复元字符，如 <code>^[^3]*$</code> 表示整个字符串不含3）。</p>
+<h2 id="创建计算字段">4.6 创建计算字段</h2>
+<h3 id="拼接字段concat函数">4.6.1 拼接字段：<code>CONCAT()</code>函数</h3>
+<h3 id="去除空格ltrimrtrimtrim函数">4.6.2 去除空格：<code>LTRIM()</code>/<code>RTRIM()</code>/<code>TRIM()</code>函数</h3>
+<h3 id="字段别名as关键字简化结果列名">4.6.3 字段别名：AS关键字（简化结果列名）</h3>
+<h3 id="算术计算加减乘除取模">4.6.4 算术计算（加减乘除、取模%）</h3>
+<h2 id="数据处理函数">4.7 数据处理函数</h2>
+<h3 id="文本函数upperlowerlength等">4.7.1 文本函数（<code>UPPER()</code>/<code>LOWER()</code>/<code>LENGTH()</code>等）</h3>
+<h3 id="数值函数roundabsfloor等">4.7.2 数值函数（<code>ROUND()</code>/<code>ABS()</code>/<code>FLOOR()</code>等）</h3>
+<h3 id="日期时间函数nowdate_formatdatediff等">4.7.3 日期时间函数（<code>NOW()</code>/<code>DATE_FORMAT()</code>/<code>DATEDIFF()</code>等）</h3>
+<h2 id="聚集函数统计计算">4.8 聚集函数（统计计算）</h2>
+<h3 id="常用函数countsumavgmaxmin">4.8.1 常用函数：<code>COUNT()</code>/<code>SUM()</code>/<code>AVG()</code>/<code>MAX()</code>/<code>MIN()</code></h3>
+<h3 id="聚集函数的使用场景统计总数求和平均值等">4.8.2 聚集函数的使用场景（统计总数、求和、平均值等）</h3>
+<h2 id="分组数据group-by子句">4.9 分组数据：GROUP BY子句</h2>
+<h3 id="group-by基本用法按指定字段分组">4.9.1 GROUP BY基本用法（按指定字段分组）</h3>
+<h3 id="筛选分组having子句与where的区别筛选分组结果-vs-筛选行">4.9.2 筛选分组：HAVING子句（与WHERE的区别：筛选分组结果 vs 筛选行）</h3>
+<h2 id="子查询">4.10 子查询</h2>
+<h3 id="where中的子查询单行子查询多行子查询in">4.10.1 WHERE中的子查询（单行子查询/多行子查询<code>IN</code>）</h3>
+<h3 id="from中的子查询派生表需指定别名">4.10.2 FROM中的子查询（派生表，需指定别名）</h3>
+<h2 id="联结表多表查询">4.11 联结表（多表查询）</h2>
+<h3 id="笛卡尔积无关联条件的联结需避免">4.11.1 笛卡尔积（无关联条件的联结，需避免）</h3>
+<h3 id="内部联结inner-join匹配两表关联数据">4.11.2 内部联结（INNER JOIN，匹配两表关联数据）</h3>
+<h3 id="表字段别名简化多表查询语法">4.11.3 表/字段别名（简化多表查询语法）</h3>
+<h3 id="自然联结natural-join自动匹配同名同类型字段">4.11.4 自然联结（NATURAL JOIN，自动匹配同名同类型字段）</h3>
+<h3 id="外部联结leftrightfull-join保留左右全表数据">4.11.5 外部联结（LEFT/RIGHT/FULL JOIN，保留左/右/全表数据）</h3>
+<h3 id="高级联结多表联结自联结">4.11.6 高级联结（多表联结、自联结）</h3>
+<h2 id="组合查询union">4.12 组合查询：UNION</h2>
+<h3 id="union基本用法合并多个查询结果集">4.12.1 UNION基本用法（合并多个查询结果集）</h3>
+<h3 id="union与union-all的区别去重-vs-保留重复">4.12.2 UNION与UNION ALL的区别（去重 vs 保留重复）</h3>
+<h2 id="全文本搜索基础用法">4.13 全文本搜索（基础用法）</h2>
+<h1 id="数据操作增删改">5. 数据操作（增删改）</h1>
+<h2 id="插入数据insert">5.1 插入数据：INSERT</h2>
+<h3 id="插入单行数据insert-into-表列1-values值1">5.1.1 插入单行数据（<code>INSERT INTO 表(列1) VALUES(值1)</code>）</h3>
+<h3 id="插入多行数据insert-into-表-values值1值2">5.1.2 插入多行数据（<code>INSERT INTO 表 VALUES(值1),(值2)</code>）</h3>
+<h3 id="插入查询结果insert-...-select批量复制数据">5.1.3 插入查询结果（<code>INSERT ... SELECT</code>，批量复制数据）</h3>
+<h2 id="更新数据update">5.2 更新数据：UPDATE</h2>
+<ul>
+<li>基本用法：<code>UPDATE 表 SET 列=值 WHERE 条件</code></li>
+<li>注意事项：必须加WHERE条件（避免全表更新）</li>
+</ul>
+<h2 id="删除数据delete">5.3 删除数据：DELETE</h2>
+<ul>
+<li>基本用法：<code>DELETE FROM 表 WHERE 条件</code></li>
+<li>注意事项：加WHERE条件（避免全表删除）、与<code>TRUNCATE</code>的区别</li>
+</ul>
+<h2 id="事务处理基础">5.4 事务处理基础</h2>
+<h3 id="事务的acid特性原子性一致性隔离性持久性">5.4.1 事务的ACID特性（原子性、一致性、隔离性、持久性）</h3>
+<h3 id="事务操作start-transactioncommit提交rollback回滚">5.4.2 事务操作：<code>START TRANSACTION</code>/<code>COMMIT</code>（提交）/<code>ROLLBACK</code>（回滚）</h3>
+<h1 id="表操作创建修改删除">6. 表操作（创建、修改、删除）</h1>
+<h2 id="创建表create-table">6.1 创建表：CREATE TABLE</h2>
+<h3 id="基本语法指定字段名数据类型约束">6.1.1 基本语法（指定字段名、数据类型、约束）</h3>
+<h3 id="表约束保证数据完整性">6.1.2 表约束（保证数据完整性）</h3>
+<ul>
+<li>实体完整性：PRIMARY KEY（主键，唯一标识记录）</li>
+<li>参照完整性：FOREIGN KEY（外键，关联其他表主键）</li>
+<li>域完整性：NOT NULL（非空）、UNIQUE（唯一）、DEFAULT（默认值）</li>
+</ul>
+<h3 id="自增字段auto_increment主键常用">6.1.3 自增字段：AUTO_INCREMENT（主键常用）</h3>
+<h2 id="更新表alter-table添加修改删除字段约束">6.2 更新表：ALTER TABLE（添加/修改/删除字段、约束）</h2>
+<h2 id="删除表drop-table谨慎使用不可逆">6.3 删除表：DROP TABLE（谨慎使用，不可逆）</h2>
+<h2 id="重命名表rename-table">6.4 重命名表：RENAME TABLE</h2>
+<h2 id="索引基础性能优化入门">6.5 索引基础（性能优化入门）</h2>
+<h3 id="索引的作用加速查询">6.5.1 索引的作用（加速查询）</h3>
+<h3 id="创建索引create-indexcreate-unique-index">6.5.2 创建索引：<code>CREATE INDEX</code>/<code>CREATE UNIQUE INDEX</code></h3>
+<h3 id="删除索引drop-index">6.5.3 删除索引：<code>DROP INDEX</code></h3>
+<h1 id="进阶理论与技术实操深化">7. 进阶理论与技术（实操深化）</h1>
+<h2 id="数据库存储">7.1 数据库存储</h2>
+<h3 id="存储策略数据文件的存储方式">7.1.1 存储策略（数据文件的存储方式）</h3>
+<h3 id="常用存储引擎innodbmyisam">7.1.2 常用存储引擎（InnoDB、MyISAM）</h3>
+<ul>
+<li>核心区别（事务支持、索引类型、锁机制）</li>
+<li>适用场景选择</li>
+</ul>
+<h2 id="数据库索引进阶">7.2 数据库索引进阶</h2>
+<h3 id="索引原理快速查找的核心逻辑">7.2.1 索引原理（快速查找的核心逻辑）</h3>
+<h3 id="索引类型b树索引哈希索引全文索引等">7.2.2 索引类型（B树索引、哈希索引、全文索引等）</h3>
+<ul>
+<li>B树/B+树索引（MySQL默认，适用于范围查询）</li>
+<li>哈希索引（适用于等值查询，局限性说明）</li>
+</ul>
+<h3 id="索引管理查看索引优化索引">7.2.3 索引管理（查看索引、优化索引）</h3>
+<h2 id="查询处理与优化">7.3 查询处理与优化</h2>
+<h3 id="查询处理过程解析优化执行">7.3.1 查询处理过程（解析→优化→执行）</h3>
+<h3 id="基础优化技巧避免select-合理建索引优化where条件">7.3.2 基础优化技巧（避免<code>SELECT *</code>、合理建索引、优化WHERE条件）</h3>
+<h3 id="代数优化与物理优化简单理解改写查询语句选择最优执行计划">7.3.3 代数优化与物理优化（简单理解：改写查询语句、选择最优执行计划）</h3>
+<h2 id="事务处理技术进阶">7.4 事务处理技术进阶</h2>
+<h3 id="事务调度及其正确性避免脏读不可重复读幻读">7.4.1 事务调度及其正确性（避免脏读、不可重复读、幻读）</h3>
+<h3 id="并发控制锁机制基础行锁表锁">7.4.2 并发控制（锁机制基础：行锁、表锁）</h3>
+<h3 id="事务隔离级别read-uncommittedread-committedrepeatable-readserializable">7.4.3 事务隔离级别（READ UNCOMMITTED→READ COMMITTED→REPEATABLE READ→SERIALIZABLE）</h3>
+<h3 id="恢复技术事务日志的作用崩溃后数据恢复">7.4.4 恢复技术（事务日志的作用：崩溃后数据恢复）</h3>
+<h2 id="数据库完整性进阶">7.5 数据库完整性进阶</h2>
+<ul>
+<li>实体完整性（主键约束强化）</li>
+<li>参照完整性（外键约束的级联操作：ON DELETE/UPDATE）</li>
+<li>其他完整性约束（CHECK约束、自定义约束）</li>
+</ul>
+<h1 id="高级数据库特性">8. 高级数据库特性</h1>
+<h2 id="视图">8.1 视图</h2>
+<h3 id="创建视图create-view简化复杂查询">8.1.1 创建视图：<code>CREATE VIEW</code>（简化复杂查询）</h3>
+<h3 id="使用与修改视图select-from-视图alter-view">8.1.2 使用与修改视图（<code>SELECT * FROM 视图</code>/<code>ALTER VIEW</code>）</h3>
+<h3 id="视图的优缺点">8.1.3 视图的优缺点</h3>
+<h2 id="存储过程">8.2 存储过程</h2>
+<h3 id="创建存储过程create-procedure封装复杂逻辑">8.2.1 创建存储过程：<code>CREATE PROCEDURE</code>（封装复杂逻辑）</h3>
+<h3 id="调用存储过程call-存储过程名">8.2.2 调用存储过程：<code>CALL 存储过程名()</code></h3>
+<h3 id="存储过程的参数inoutinout">8.2.3 存储过程的参数（IN/OUT/INOUT）</h3>
+<h2 id="游标遍历查询结果集">8.3 游标（遍历查询结果集）</h2>
+<h2 id="触发器">8.4 触发器</h2>
+<h3 id="创建触发器create-trigger自动执行逻辑">8.4.1 创建触发器：<code>CREATE TRIGGER</code>（自动执行逻辑）</h3>
+<h3 id="触发时机beforeafter与触发类型insertupdatedelete">8.4.2 触发时机（BEFORE/AFTER）与触发类型（INSERT/UPDATE/DELETE）</h3>
+<h1 id="数据库管理与维护">9. 数据库管理与维护</h1>
+<h2 id="访问控制与用户管理">9.1 访问控制与用户管理</h2>
+<h3 id="创建用户create-user">9.1.1 创建用户：<code>CREATE USER</code></h3>
+<h3 id="授权grant-权限-on-数据库.表-to-用户">9.1.2 授权：<code>GRANT 权限 ON 数据库.表 TO 用户</code></h3>
+<h3 id="撤销权限revoke-权限-on-数据库.表-from-用户">9.1.3 撤销权限：<code>REVOKE 权限 ON 数据库.表 FROM 用户</code></h3>
+<h3 id="删除用户drop-user">9.1.4 删除用户：<code>DROP USER</code></h3>
+<h2 id="数据备份">9.2 数据备份</h2>
+<h3 id="逻辑备份mysqldump命令">9.2.1 逻辑备份（<code>mysqldump</code>命令）</h3>
+<h3 id="恢复数据source命令mysql--u用户名--p-数据库-备份文件">9.2.2 恢复数据（<code>SOURCE</code>命令/<code>mysql -u用户名 -p 数据库 &lt; 备份文件</code>）</h3>
+<h2 id="数据库维护">9.3 数据库维护</h2>
+<ul>
+<li>优化表：<code>OPTIMIZE TABLE</code></li>
+<li>检查表：<code>CHECK TABLE</code></li>
+</ul>
+<h2 id="问题诊断与日志">9.4 问题诊断与日志</h2>
+<h3 id="诊断启动问题配置文件检查端口占用排查">9.4.1 诊断启动问题（配置文件检查、端口占用排查）</h3>
+<h3 id="查看日志文件错误日志查询日志慢查询日志">9.4.2 查看日志文件（错误日志、查询日志、慢查询日志）</h3>
+<h2 id="性能改善">9.5 性能改善</h2>
+<ul>
+<li>慢查询优化（分析慢查询日志）</li>
+<li>索引优化（避免无效索引、覆盖索引使用）</li>
+<li>配置参数调整（基础参数：连接数、缓存大小）</li>
+</ul>
+<h1 id="深入理论拓展可选进阶学习者">10. 深入理论拓展（可选，进阶学习者）</h1>
+<h2 id="阿姆斯特朗公理体系函数依赖的推理规则">10.1 阿姆斯特朗公理体系（函数依赖的推理规则）</h2>
+<h2 id="模式分解无损连接分解保持函数依赖分解">10.2 模式分解（无损连接分解、保持函数依赖分解）</h2>
+<h2 id="多值依赖与第四范式4nf">10.3 多值依赖与第四范式（4NF）</h2>
+<h2 id="其他高级范式bcnf等">10.4 其他高级范式（BCNF等）</h2>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/DataBase/" rel="tag"><i class="fa fa-tag"></i> DataBase</a>
+              <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/29/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84Fenwick/" rel="prev" title="Fenwick 树状数组">
+      <i class="fa fa-chevron-left"></i> Fenwick 树状数组
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E9%A1%BB%E7%9F%A5warning"><span class="nav-number">1.</span> <span class="nav-text">学习须知（Warning）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA"><span class="nav-number">2.</span> <span class="nav-text">数据库基础理论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E6%A0%B8%E5%BF%83"><span class="nav-number">2.1.</span> <span class="nav-text">数据库设计核心</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#e-r%E6%A8%A1%E5%9E%8B%E5%AE%9E%E4%BD%93-%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.1.</span> <span class="nav-text">E-R模型（实体-关系模型）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A7%84%E8%8C%83%E5%8C%96%E5%85%A5%E9%97%A8"><span class="nav-number">2.1.2.</span> <span class="nav-text">关系数据库规范化入门</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%9C%AF%E8%AF%AD%E8%A7%A3%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">核心术语解析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">数据库基础操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2select%E8%AF%AD%E5%8F%A5"><span class="nav-number">5.</span> <span class="nav-text">数据查询：SELECT语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#select-%E5%9F%BA%E6%9C%AC%E6%A0%BC%E5%BC%8F"><span class="nav-number">5.1.</span> <span class="nav-text">SELECT 基本格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#distinct-%E5%85%B3%E9%94%AE%E5%AD%97%E7%BB%93%E6%9E%9C%E5%8E%BB%E9%87%8D"><span class="nav-number">5.2.</span> <span class="nav-text">DISTINCT 关键字（结果去重）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#limit%E5%85%B3%E9%94%AE%E5%AD%97%E5%88%86%E9%A1%B5%E5%9F%BA%E7%A1%80%E9%99%90%E5%88%B6%E7%BB%93%E6%9E%9C%E8%A1%8C%E6%95%B0"><span class="nav-number">5.3.</span> <span class="nav-text">LIMIT关键字（分页基础）（限制结果行数）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#order-by%E5%AD%90%E5%8F%A5%E7%BB%93%E6%9E%9C%E6%8E%92%E5%BA%8F%E5%8D%87%E5%BA%8Fasc%E9%99%8D%E5%BA%8Fdesc"><span class="nav-number">5.4.</span> <span class="nav-text">ORDER BY子句（结果排序）（升序ASC&#x2F;降序DESC）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#where%E5%AD%90%E5%8F%A5%E6%95%B0%E6%8D%AE%E7%AD%9B%E9%80%89"><span class="nav-number">5.5.</span> <span class="nav-text">WHERE子句（数据筛选）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">5.5.1.</span> <span class="nav-text">基础操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E5%80%BC%E6%A3%80%E6%9F%A5is-nullis-not-null"><span class="nav-number">5.5.2.</span> <span class="nav-text">空值检查：IS NULL&#x2F;IS NOT NULL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E6%93%8D%E4%BD%9C%E7%AC%A6andorinnot"><span class="nav-number">5.5.3.</span> <span class="nav-text">逻辑操作符（AND&#x2F;OR&#x2F;IN&#x2F;NOT）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#and-%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">5.5.3.1.</span> <span class="nav-text">AND 操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#or-%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">5.5.3.2.</span> <span class="nav-text">OR 操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#and-%E4%B8%8E-or-%E7%9A%84%E8%BF%90%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="nav-number">5.5.3.3.</span> <span class="nav-text">AND 与 OR 的运行顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#in-%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">5.5.3.4.</span> <span class="nav-text">IN 操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#not-%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">5.5.3.5.</span> <span class="nav-text">NOT 操作符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#like%E4%B8%8E%E9%80%9A%E9%85%8D%E7%AC%A6_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.5.4.</span> <span class="nav-text">LIKE与通配符（%\\_）(模糊查询)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#like-%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">5.5.4.1.</span> <span class="nav-text">LIKE 操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%99%BE%E5%88%86%E5%8F%B7%E9%80%9A%E9%85%8D%E7%AC%A6"><span class="nav-number">5.5.4.2.</span> <span class="nav-text">百分号（%）通配符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8B%E5%88%92%E7%BA%BF_%E9%80%9A%E9%85%8D%E7%AC%A6"><span class="nav-number">5.5.4.3.</span> <span class="nav-text">下划线（_）通配符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%AC%E4%B9%89%E9%80%9A%E9%85%8D%E7%AC%A6"><span class="nav-number">5.5.4.4.</span> <span class="nav-text">转义通配符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#regexp%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%A4%8D%E6%9D%82%E5%8C%B9%E9%85%8D"><span class="nav-number">5.5.5.</span> <span class="nav-text">REGEXP（正则表达式）(复杂匹配)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-.-%E5%8C%B9%E9%85%8D%E5%8D%95%E4%B8%AA%E4%BB%BB%E6%84%8F%E5%AD%97%E7%AC%A6"><span class="nav-number">5.5.5.1.</span> <span class="nav-text">使用 . 匹配单个任意字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-%E5%8C%B9%E9%85%8D%E5%A4%9A%E4%B8%AA%E6%A8%A1%E5%BC%8F%E9%80%BB%E8%BE%91%E6%88%96"><span class="nav-number">5.5.5.2.</span> <span class="nav-text">使用 | 匹配多个模式（逻辑“或”）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-%E5%8C%B9%E9%85%8D%E6%8C%87%E5%AE%9A%E5%AD%97%E7%AC%A6%E9%9B%86%E4%B8%AD%E7%9A%84%E4%BB%BB%E6%84%8F%E4%B8%80%E4%B8%AA"><span class="nav-number">5.5.5.3.</span> <span class="nav-text">使用 [] 匹配指定字符集中的任意一个</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8---%E5%9C%A8-%E5%86%85%E5%AE%9A%E4%B9%89%E5%AD%97%E7%AC%A6%E8%8C%83%E5%9B%B4"><span class="nav-number">5.5.5.4.</span> <span class="nav-text">使用 - 在 [] 内定义字符范围</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-%E5%8C%B9%E9%85%8D%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E8%BD%AC%E4%B9%89"><span class="nav-number">5.5.5.5.</span> <span class="nav-text">使用 \\ 匹配特殊字符（转义）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%B9%E9%85%8D%E5%AD%97%E7%AC%A6%E7%B1%BB%E9%A2%84%E8%AE%BE%E5%B8%B8%E7%94%A8%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="nav-number">5.5.5.6.</span> <span class="nav-text">匹配字符类（预设常用字符集）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%87%8D%E5%A4%8D%E5%85%83%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D%E5%A4%9A%E4%B8%AA%E5%AD%97%E7%AC%A6"><span class="nav-number">5.5.5.7.</span> <span class="nav-text">使用重复元字符匹配多个字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%9A%E4%BD%8D%E7%AC%A6%E5%8C%B9%E9%85%8D%E4%BD%8D%E7%BD%AE"><span class="nav-number">5.5.5.8.</span> <span class="nav-text">使用定位符匹配位置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9A%84%E5%8F%8C%E9%87%8D%E7%94%A8%E9%80%94"><span class="nav-number">5.5.5.9.</span> <span class="nav-text">^ 的双重用途</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%AE%A1%E7%AE%97%E5%AD%97%E6%AE%B5"><span class="nav-number">5.6.</span> <span class="nav-text">4.6 创建计算字段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%BC%E6%8E%A5%E5%AD%97%E6%AE%B5concat%E5%87%BD%E6%95%B0"><span class="nav-number">5.6.1.</span> <span class="nav-text">4.6.1 拼接字段：CONCAT()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%BB%E9%99%A4%E7%A9%BA%E6%A0%BCltrimrtrimtrim%E5%87%BD%E6%95%B0"><span class="nav-number">5.6.2.</span> <span class="nav-text">4.6.2 去除空格：LTRIM()&#x2F;RTRIM()&#x2F;TRIM()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E6%AE%B5%E5%88%AB%E5%90%8Das%E5%85%B3%E9%94%AE%E5%AD%97%E7%AE%80%E5%8C%96%E7%BB%93%E6%9E%9C%E5%88%97%E5%90%8D"><span class="nav-number">5.6.3.</span> <span class="nav-text">4.6.3 字段别名：AS关键字（简化结果列名）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E8%AE%A1%E7%AE%97%E5%8A%A0%E5%87%8F%E4%B9%98%E9%99%A4%E5%8F%96%E6%A8%A1"><span class="nav-number">5.6.4.</span> <span class="nav-text">4.6.4 算术计算（加减乘除、取模%）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0"><span class="nav-number">5.7.</span> <span class="nav-text">4.7 数据处理函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E5%87%BD%E6%95%B0upperlowerlength%E7%AD%89"><span class="nav-number">5.7.1.</span> <span class="nav-text">4.7.1 文本函数（UPPER()&#x2F;LOWER()&#x2F;LENGTH()等）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%80%BC%E5%87%BD%E6%95%B0roundabsfloor%E7%AD%89"><span class="nav-number">5.7.2.</span> <span class="nav-text">4.7.2 数值函数（ROUND()&#x2F;ABS()&#x2F;FLOOR()等）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4%E5%87%BD%E6%95%B0nowdate_formatdatediff%E7%AD%89"><span class="nav-number">5.7.3.</span> <span class="nav-text">4.7.3 日期时间函数（NOW()&#x2F;DATE_FORMAT()&#x2F;DATEDIFF()等）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%9A%E9%9B%86%E5%87%BD%E6%95%B0%E7%BB%9F%E8%AE%A1%E8%AE%A1%E7%AE%97"><span class="nav-number">5.8.</span> <span class="nav-text">4.8 聚集函数（统计计算）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0countsumavgmaxmin"><span class="nav-number">5.8.1.</span> <span class="nav-text">4.8.1 常用函数：COUNT()&#x2F;SUM()&#x2F;AVG()&#x2F;MAX()&#x2F;MIN()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%9A%E9%9B%86%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E7%BB%9F%E8%AE%A1%E6%80%BB%E6%95%B0%E6%B1%82%E5%92%8C%E5%B9%B3%E5%9D%87%E5%80%BC%E7%AD%89"><span class="nav-number">5.8.2.</span> <span class="nav-text">4.8.2 聚集函数的使用场景（统计总数、求和、平均值等）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E6%95%B0%E6%8D%AEgroup-by%E5%AD%90%E5%8F%A5"><span class="nav-number">5.9.</span> <span class="nav-text">4.9 分组数据：GROUP BY子句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#group-by%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%E6%8C%89%E6%8C%87%E5%AE%9A%E5%AD%97%E6%AE%B5%E5%88%86%E7%BB%84"><span class="nav-number">5.9.1.</span> <span class="nav-text">4.9.1 GROUP BY基本用法（按指定字段分组）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%9B%E9%80%89%E5%88%86%E7%BB%84having%E5%AD%90%E5%8F%A5%E4%B8%8Ewhere%E7%9A%84%E5%8C%BA%E5%88%AB%E7%AD%9B%E9%80%89%E5%88%86%E7%BB%84%E7%BB%93%E6%9E%9C-vs-%E7%AD%9B%E9%80%89%E8%A1%8C"><span class="nav-number">5.9.2.</span> <span class="nav-text">4.9.2 筛选分组：HAVING子句（与WHERE的区别：筛选分组结果 vs 筛选行）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.10.</span> <span class="nav-text">4.10 子查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#where%E4%B8%AD%E7%9A%84%E5%AD%90%E6%9F%A5%E8%AF%A2%E5%8D%95%E8%A1%8C%E5%AD%90%E6%9F%A5%E8%AF%A2%E5%A4%9A%E8%A1%8C%E5%AD%90%E6%9F%A5%E8%AF%A2in"><span class="nav-number">5.10.1.</span> <span class="nav-text">4.10.1 WHERE中的子查询（单行子查询&#x2F;多行子查询IN）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#from%E4%B8%AD%E7%9A%84%E5%AD%90%E6%9F%A5%E8%AF%A2%E6%B4%BE%E7%94%9F%E8%A1%A8%E9%9C%80%E6%8C%87%E5%AE%9A%E5%88%AB%E5%90%8D"><span class="nav-number">5.10.2.</span> <span class="nav-text">4.10.2 FROM中的子查询（派生表，需指定别名）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%94%E7%BB%93%E8%A1%A8%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.11.</span> <span class="nav-text">4.11 联结表（多表查询）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%9B%E5%8D%A1%E5%B0%94%E7%A7%AF%E6%97%A0%E5%85%B3%E8%81%94%E6%9D%A1%E4%BB%B6%E7%9A%84%E8%81%94%E7%BB%93%E9%9C%80%E9%81%BF%E5%85%8D"><span class="nav-number">5.11.1.</span> <span class="nav-text">4.11.1 笛卡尔积（无关联条件的联结，需避免）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E8%81%94%E7%BB%93inner-join%E5%8C%B9%E9%85%8D%E4%B8%A4%E8%A1%A8%E5%85%B3%E8%81%94%E6%95%B0%E6%8D%AE"><span class="nav-number">5.11.2.</span> <span class="nav-text">4.11.2 内部联结（INNER JOIN，匹配两表关联数据）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E5%AD%97%E6%AE%B5%E5%88%AB%E5%90%8D%E7%AE%80%E5%8C%96%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2%E8%AF%AD%E6%B3%95"><span class="nav-number">5.11.3.</span> <span class="nav-text">4.11.3 表&#x2F;字段别名（简化多表查询语法）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E7%84%B6%E8%81%94%E7%BB%93natural-join%E8%87%AA%E5%8A%A8%E5%8C%B9%E9%85%8D%E5%90%8C%E5%90%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E5%AD%97%E6%AE%B5"><span class="nav-number">5.11.4.</span> <span class="nav-text">4.11.4 自然联结（NATURAL JOIN，自动匹配同名同类型字段）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E9%83%A8%E8%81%94%E7%BB%93leftrightfull-join%E4%BF%9D%E7%95%99%E5%B7%A6%E5%8F%B3%E5%85%A8%E8%A1%A8%E6%95%B0%E6%8D%AE"><span class="nav-number">5.11.5.</span> <span class="nav-text">4.11.5 外部联结（LEFT&#x2F;RIGHT&#x2F;FULL JOIN，保留左&#x2F;右&#x2F;全表数据）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E8%81%94%E7%BB%93%E5%A4%9A%E8%A1%A8%E8%81%94%E7%BB%93%E8%87%AA%E8%81%94%E7%BB%93"><span class="nav-number">5.11.6.</span> <span class="nav-text">4.11.6 高级联结（多表联结、自联结）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E6%9F%A5%E8%AF%A2union"><span class="nav-number">5.12.</span> <span class="nav-text">4.12 组合查询：UNION</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#union%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AA%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E9%9B%86"><span class="nav-number">5.12.1.</span> <span class="nav-text">4.12.1 UNION基本用法（合并多个查询结果集）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#union%E4%B8%8Eunion-all%E7%9A%84%E5%8C%BA%E5%88%AB%E5%8E%BB%E9%87%8D-vs-%E4%BF%9D%E7%95%99%E9%87%8D%E5%A4%8D"><span class="nav-number">5.12.2.</span> <span class="nav-text">4.12.2 UNION与UNION ALL的区别（去重 vs 保留重复）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E6%96%87%E6%9C%AC%E6%90%9C%E7%B4%A2%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95"><span class="nav-number">5.13.</span> <span class="nav-text">4.13 全文本搜索（基础用法）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E5%A2%9E%E5%88%A0%E6%94%B9"><span class="nav-number">6.</span> <span class="nav-text">5. 数据操作（增删改）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AEinsert"><span class="nav-number">6.1.</span> <span class="nav-text">5.1 插入数据：INSERT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E5%8D%95%E8%A1%8C%E6%95%B0%E6%8D%AEinsert-into-%E8%A1%A8%E5%88%971-values%E5%80%BC1"><span class="nav-number">6.1.1.</span> <span class="nav-text">5.1.1 插入单行数据（INSERT INTO 表(列1) VALUES(值1)）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E5%A4%9A%E8%A1%8C%E6%95%B0%E6%8D%AEinsert-into-%E8%A1%A8-values%E5%80%BC1%E5%80%BC2"><span class="nav-number">6.1.2.</span> <span class="nav-text">5.1.2 插入多行数据（INSERT INTO 表 VALUES(值1),(值2)）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9Cinsert-...-select%E6%89%B9%E9%87%8F%E5%A4%8D%E5%88%B6%E6%95%B0%E6%8D%AE"><span class="nav-number">6.1.3.</span> <span class="nav-text">5.1.3 插入查询结果（INSERT ... SELECT，批量复制数据）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AEupdate"><span class="nav-number">6.2.</span> <span class="nav-text">5.2 更新数据：UPDATE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AEdelete"><span class="nav-number">6.3.</span> <span class="nav-text">5.3 删除数据：DELETE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E5%A4%84%E7%90%86%E5%9F%BA%E7%A1%80"><span class="nav-number">6.4.</span> <span class="nav-text">5.4 事务处理基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84acid%E7%89%B9%E6%80%A7%E5%8E%9F%E5%AD%90%E6%80%A7%E4%B8%80%E8%87%B4%E6%80%A7%E9%9A%94%E7%A6%BB%E6%80%A7%E6%8C%81%E4%B9%85%E6%80%A7"><span class="nav-number">6.4.1.</span> <span class="nav-text">5.4.1 事务的ACID特性（原子性、一致性、隔离性、持久性）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E6%93%8D%E4%BD%9Cstart-transactioncommit%E6%8F%90%E4%BA%A4rollback%E5%9B%9E%E6%BB%9A"><span class="nav-number">6.4.2.</span> <span class="nav-text">5.4.2 事务操作：START TRANSACTION&#x2F;COMMIT（提交）&#x2F;ROLLBACK（回滚）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%A8%E6%93%8D%E4%BD%9C%E5%88%9B%E5%BB%BA%E4%BF%AE%E6%94%B9%E5%88%A0%E9%99%A4"><span class="nav-number">7.</span> <span class="nav-text">6. 表操作（创建、修改、删除）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%A1%A8create-table"><span class="nav-number">7.1.</span> <span class="nav-text">6.1 创建表：CREATE TABLE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%E6%8C%87%E5%AE%9A%E5%AD%97%E6%AE%B5%E5%90%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%BA%A6%E6%9D%9F"><span class="nav-number">7.1.1.</span> <span class="nav-text">6.1.1 基本语法（指定字段名、数据类型、约束）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E7%BA%A6%E6%9D%9F%E4%BF%9D%E8%AF%81%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="nav-number">7.1.2.</span> <span class="nav-text">6.1.2 表约束（保证数据完整性）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%A2%9E%E5%AD%97%E6%AE%B5auto_increment%E4%B8%BB%E9%94%AE%E5%B8%B8%E7%94%A8"><span class="nav-number">7.1.3.</span> <span class="nav-text">6.1.3 自增字段：AUTO_INCREMENT（主键常用）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E8%A1%A8alter-table%E6%B7%BB%E5%8A%A0%E4%BF%AE%E6%94%B9%E5%88%A0%E9%99%A4%E5%AD%97%E6%AE%B5%E7%BA%A6%E6%9D%9F"><span class="nav-number">7.2.</span> <span class="nav-text">6.2 更新表：ALTER TABLE（添加&#x2F;修改&#x2F;删除字段、约束）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%A1%A8drop-table%E8%B0%A8%E6%85%8E%E4%BD%BF%E7%94%A8%E4%B8%8D%E5%8F%AF%E9%80%86"><span class="nav-number">7.3.</span> <span class="nav-text">6.3 删除表：DROP TABLE（谨慎使用，不可逆）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E5%91%BD%E5%90%8D%E8%A1%A8rename-table"><span class="nav-number">7.4.</span> <span class="nav-text">6.4 重命名表：RENAME TABLE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E5%9F%BA%E7%A1%80%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%85%A5%E9%97%A8"><span class="nav-number">7.5.</span> <span class="nav-text">6.5 索引基础（性能优化入门）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BD%9C%E7%94%A8%E5%8A%A0%E9%80%9F%E6%9F%A5%E8%AF%A2"><span class="nav-number">7.5.1.</span> <span class="nav-text">6.5.1 索引的作用（加速查询）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95create-indexcreate-unique-index"><span class="nav-number">7.5.2.</span> <span class="nav-text">6.5.2 创建索引：CREATE INDEX&#x2F;CREATE UNIQUE INDEX</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%B4%A2%E5%BC%95drop-index"><span class="nav-number">7.5.3.</span> <span class="nav-text">6.5.3 删除索引：DROP INDEX</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9B%E9%98%B6%E7%90%86%E8%AE%BA%E4%B8%8E%E6%8A%80%E6%9C%AF%E5%AE%9E%E6%93%8D%E6%B7%B1%E5%8C%96"><span class="nav-number">8.</span> <span class="nav-text">7. 进阶理论与技术（实操深化）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%98%E5%82%A8"><span class="nav-number">8.1.</span> <span class="nav-text">7.1 数据库存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E7%AD%96%E7%95%A5%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">8.1.1.</span> <span class="nav-text">7.1.1 存储策略（数据文件的存储方式）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8Einnodbmyisam"><span class="nav-number">8.1.2.</span> <span class="nav-text">7.1.2 常用存储引擎（InnoDB、MyISAM）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95%E8%BF%9B%E9%98%B6"><span class="nav-number">8.2.</span> <span class="nav-text">7.2 数据库索引进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E5%8E%9F%E7%90%86%E5%BF%AB%E9%80%9F%E6%9F%A5%E6%89%BE%E7%9A%84%E6%A0%B8%E5%BF%83%E9%80%BB%E8%BE%91"><span class="nav-number">8.2.1.</span> <span class="nav-text">7.2.1 索引原理（快速查找的核心逻辑）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E7%B1%BB%E5%9E%8Bb%E6%A0%91%E7%B4%A2%E5%BC%95%E5%93%88%E5%B8%8C%E7%B4%A2%E5%BC%95%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95%E7%AD%89"><span class="nav-number">8.2.2.</span> <span class="nav-text">7.2.2 索引类型（B树索引、哈希索引、全文索引等）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E7%AE%A1%E7%90%86%E6%9F%A5%E7%9C%8B%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96%E7%B4%A2%E5%BC%95"><span class="nav-number">8.2.3.</span> <span class="nav-text">7.2.3 索引管理（查看索引、优化索引）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E5%A4%84%E7%90%86%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="nav-number">8.3.</span> <span class="nav-text">7.3 查询处理与优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B%E8%A7%A3%E6%9E%90%E4%BC%98%E5%8C%96%E6%89%A7%E8%A1%8C"><span class="nav-number">8.3.1.</span> <span class="nav-text">7.3.1 查询处理过程（解析→优化→执行）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E4%BC%98%E5%8C%96%E6%8A%80%E5%B7%A7%E9%81%BF%E5%85%8Dselect-%E5%90%88%E7%90%86%E5%BB%BA%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96where%E6%9D%A1%E4%BB%B6"><span class="nav-number">8.3.2.</span> <span class="nav-text">7.3.2 基础优化技巧（避免SELECT *、合理建索引、优化WHERE条件）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E6%95%B0%E4%BC%98%E5%8C%96%E4%B8%8E%E7%89%A9%E7%90%86%E4%BC%98%E5%8C%96%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3%E6%94%B9%E5%86%99%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%E9%80%89%E6%8B%A9%E6%9C%80%E4%BC%98%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92"><span class="nav-number">8.3.3.</span> <span class="nav-text">7.3.3 代数优化与物理优化（简单理解：改写查询语句、选择最优执行计划）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E5%A4%84%E7%90%86%E6%8A%80%E6%9C%AF%E8%BF%9B%E9%98%B6"><span class="nav-number">8.4.</span> <span class="nav-text">7.4 事务处理技术进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E8%B0%83%E5%BA%A6%E5%8F%8A%E5%85%B6%E6%AD%A3%E7%A1%AE%E6%80%A7%E9%81%BF%E5%85%8D%E8%84%8F%E8%AF%BB%E4%B8%8D%E5%8F%AF%E9%87%8D%E5%A4%8D%E8%AF%BB%E5%B9%BB%E8%AF%BB"><span class="nav-number">8.4.1.</span> <span class="nav-text">7.4.1 事务调度及其正确性（避免脏读、不可重复读、幻读）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E9%94%81%E6%9C%BA%E5%88%B6%E5%9F%BA%E7%A1%80%E8%A1%8C%E9%94%81%E8%A1%A8%E9%94%81"><span class="nav-number">8.4.2.</span> <span class="nav-text">7.4.2 并发控制（锁机制基础：行锁、表锁）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%ABread-uncommittedread-committedrepeatable-readserializable"><span class="nav-number">8.4.3.</span> <span class="nav-text">7.4.3 事务隔离级别（READ UNCOMMITTED→READ COMMITTED→REPEATABLE READ→SERIALIZABLE）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF%E4%BA%8B%E5%8A%A1%E6%97%A5%E5%BF%97%E7%9A%84%E4%BD%9C%E7%94%A8%E5%B4%A9%E6%BA%83%E5%90%8E%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D"><span class="nav-number">8.4.4.</span> <span class="nav-text">7.4.4 恢复技术（事务日志的作用：崩溃后数据恢复）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%8C%E6%95%B4%E6%80%A7%E8%BF%9B%E9%98%B6"><span class="nav-number">8.5.</span> <span class="nav-text">7.5 数据库完整性进阶</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%BA%93%E7%89%B9%E6%80%A7"><span class="nav-number">9.</span> <span class="nav-text">8. 高级数据库特性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE"><span class="nav-number">9.1.</span> <span class="nav-text">8.1 视图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%A7%86%E5%9B%BEcreate-view%E7%AE%80%E5%8C%96%E5%A4%8D%E6%9D%82%E6%9F%A5%E8%AF%A2"><span class="nav-number">9.1.1.</span> <span class="nav-text">8.1.1 创建视图：CREATE VIEW（简化复杂查询）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%8E%E4%BF%AE%E6%94%B9%E8%A7%86%E5%9B%BEselect-from-%E8%A7%86%E5%9B%BEalter-view"><span class="nav-number">9.1.2.</span> <span class="nav-text">8.1.2 使用与修改视图（SELECT * FROM 视图&#x2F;ALTER VIEW）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">9.1.3.</span> <span class="nav-text">8.1.3 视图的优缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">9.2.</span> <span class="nav-text">8.2 存储过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8Bcreate-procedure%E5%B0%81%E8%A3%85%E5%A4%8D%E6%9D%82%E9%80%BB%E8%BE%91"><span class="nav-number">9.2.1.</span> <span class="nav-text">8.2.1 创建存储过程：CREATE PROCEDURE（封装复杂逻辑）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8Bcall-%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E5%90%8D"><span class="nav-number">9.2.2.</span> <span class="nav-text">8.2.2 调用存储过程：CALL 存储过程名()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E7%9A%84%E5%8F%82%E6%95%B0inoutinout"><span class="nav-number">9.2.3.</span> <span class="nav-text">8.2.3 存储过程的参数（IN&#x2F;OUT&#x2F;INOUT）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B8%E6%A0%87%E9%81%8D%E5%8E%86%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E9%9B%86"><span class="nav-number">9.3.</span> <span class="nav-text">8.3 游标（遍历查询结果集）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="nav-number">9.4.</span> <span class="nav-text">8.4 触发器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8create-trigger%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E9%80%BB%E8%BE%91"><span class="nav-number">9.4.1.</span> <span class="nav-text">8.4.1 创建触发器：CREATE TRIGGER（自动执行逻辑）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A6%E5%8F%91%E6%97%B6%E6%9C%BAbeforeafter%E4%B8%8E%E8%A7%A6%E5%8F%91%E7%B1%BB%E5%9E%8Binsertupdatedelete"><span class="nav-number">9.4.2.</span> <span class="nav-text">8.4.2 触发时机（BEFORE&#x2F;AFTER）与触发类型（INSERT&#x2F;UPDATE&#x2F;DELETE）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E4%B8%8E%E7%BB%B4%E6%8A%A4"><span class="nav-number">10.</span> <span class="nav-text">9. 数据库管理与维护</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E4%B8%8E%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86"><span class="nav-number">10.1.</span> <span class="nav-text">9.1 访问控制与用户管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7create-user"><span class="nav-number">10.1.1.</span> <span class="nav-text">9.1.1 创建用户：CREATE USER</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%88%E6%9D%83grant-%E6%9D%83%E9%99%90-on-%E6%95%B0%E6%8D%AE%E5%BA%93.%E8%A1%A8-to-%E7%94%A8%E6%88%B7"><span class="nav-number">10.1.2.</span> <span class="nav-text">9.1.2 授权：GRANT 权限 ON 数据库.表 TO 用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%92%A4%E9%94%80%E6%9D%83%E9%99%90revoke-%E6%9D%83%E9%99%90-on-%E6%95%B0%E6%8D%AE%E5%BA%93.%E8%A1%A8-from-%E7%94%A8%E6%88%B7"><span class="nav-number">10.1.3.</span> <span class="nav-text">9.1.3 撤销权限：REVOKE 权限 ON 数据库.表 FROM 用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7drop-user"><span class="nav-number">10.1.4.</span> <span class="nav-text">9.1.4 删除用户：DROP USER</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD"><span class="nav-number">10.2.</span> <span class="nav-text">9.2 数据备份</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E5%A4%87%E4%BB%BDmysqldump%E5%91%BD%E4%BB%A4"><span class="nav-number">10.2.1.</span> <span class="nav-text">9.2.1 逻辑备份（mysqldump命令）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AEsource%E5%91%BD%E4%BB%A4mysql--u%E7%94%A8%E6%88%B7%E5%90%8D--p-%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6"><span class="nav-number">10.2.2.</span> <span class="nav-text">9.2.2 恢复数据（SOURCE命令&#x2F;mysql -u用户名 -p 数据库 &lt; 备份文件）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%B4%E6%8A%A4"><span class="nav-number">10.3.</span> <span class="nav-text">9.3 数据库维护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%AF%8A%E6%96%AD%E4%B8%8E%E6%97%A5%E5%BF%97"><span class="nav-number">10.4.</span> <span class="nav-text">9.4 问题诊断与日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%8A%E6%96%AD%E5%90%AF%E5%8A%A8%E9%97%AE%E9%A2%98%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%A3%80%E6%9F%A5%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E6%8E%92%E6%9F%A5"><span class="nav-number">10.4.1.</span> <span class="nav-text">9.4.1 诊断启动问题（配置文件检查、端口占用排查）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E9%94%99%E8%AF%AF%E6%97%A5%E5%BF%97%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97"><span class="nav-number">10.4.2.</span> <span class="nav-text">9.4.2 查看日志文件（错误日志、查询日志、慢查询日志）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E6%94%B9%E5%96%84"><span class="nav-number">10.5.</span> <span class="nav-text">9.5 性能改善</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B1%E5%85%A5%E7%90%86%E8%AE%BA%E6%8B%93%E5%B1%95%E5%8F%AF%E9%80%89%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E8%80%85"><span class="nav-number">11.</span> <span class="nav-text">10. 深入理论拓展（可选，进阶学习者）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%BF%E5%A7%86%E6%96%AF%E7%89%B9%E6%9C%97%E5%85%AC%E7%90%86%E4%BD%93%E7%B3%BB%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96%E7%9A%84%E6%8E%A8%E7%90%86%E8%A7%84%E5%88%99"><span class="nav-number">11.1.</span> <span class="nav-text">10.1 阿姆斯特朗公理体系（函数依赖的推理规则）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E5%88%86%E8%A7%A3%E6%97%A0%E6%8D%9F%E8%BF%9E%E6%8E%A5%E5%88%86%E8%A7%A3%E4%BF%9D%E6%8C%81%E5%87%BD%E6%95%B0%E4%BE%9D%E8%B5%96%E5%88%86%E8%A7%A3"><span class="nav-number">11.2.</span> <span class="nav-text">10.2 模式分解（无损连接分解、保持函数依赖分解）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E5%80%BC%E4%BE%9D%E8%B5%96%E4%B8%8E%E7%AC%AC%E5%9B%9B%E8%8C%83%E5%BC%8F4nf"><span class="nav-number">11.3.</span> <span class="nav-text">10.3 多值依赖与第四范式（4NF）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%AB%98%E7%BA%A7%E8%8C%83%E5%BC%8Fbcnf%E7%AD%89"><span class="nav-number">11.4.</span> <span class="nav-text">10.4 其他高级范式（BCNF等）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="jiejiejiang"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">jiejiejiang</p>
+  <div class="site-description" itemprop="description">现在开始，还来得及</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+<!-- CloudCalendar -->
+<div class="widget-wrap" style="width: 90%;margin-left: auto;margin-right: auto; opacity: 0.97;">
+	<div class="widget" id="CloudCalendar"></div>
+</div>
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jiejiejiang</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">26k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:34</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        displayMath: {'[+]': [['$$', '$$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+<!-- calendar widget -->
+
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'nS57E3JRn6eYspCCr9pXSVn5-gzGzoHsz',
+      appKey     : 'L8rQJuf9mDfJkhZvlLa9UhPq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  <!-- calendar widget -->
+
+
+</body>
+</html>
