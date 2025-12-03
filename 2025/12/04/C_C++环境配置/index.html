@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif:300,300italic,400,400italic,700,700italic|Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jiejiejiang2004.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="简介  DevC++ 是一个基于MinGW的C&#x2F;C++集成开发环境（IDE），它提供了一个简单而强大的界面，用于编写、编译和调试C&#x2F;C++程序。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C&#x2F;C++环境配置（更新ing）">
+<meta property="og:url" content="https://jiejiejiang2004.github.io/2025/12/04/C_C++%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="简介  DevC++ 是一个基于MinGW的C&#x2F;C++集成开发环境（IDE），它提供了一个简单而强大的界面，用于编写、编译和调试C&#x2F;C++程序。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jiejiejiang2004.github.io/2025/12/04/C_C++%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/DevC++_01.png">
+<meta property="og:image" content="https://jiejiejiang2004.github.io/2025/12/04/C_C++%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/DevC++_02.png">
+<meta property="og:image" content="https://jiejiejiang2004.github.io/2025/12/04/C_C++%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/DevC++_03.png">
+<meta property="og:image" content="https://jiejiejiang2004.github.io/2025/12/04/C_C++%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/DevC++_04.png">
+<meta property="og:image" content="https://jiejiejiang2004.github.io/2025/12/04/C_C++%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/DevC++_05.png">
+<meta property="og:image" content="https://jiejiejiang2004.github.io/2025/12/04/C_C++%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/DevC++_06.png">
+<meta property="og:image" content="https://jiejiejiang2004.github.io/2025/12/04/C_C++%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/DevC++_07.png">
+<meta property="og:image" content="https://jiejiejiang2004.github.io/2025/12/04/C_C++%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/DevC++_08.png">
+<meta property="article:published_time" content="2025-12-03T18:04:20.000Z">
+<meta property="article:modified_time" content="2025-12-03T18:40:37.302Z">
+<meta property="article:author" content="jiejiejiang">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jiejiejiang2004.github.io/2025/12/04/C_C++%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/DevC++_01.png">
+
+<link rel="canonical" href="https://jiejiejiang2004.github.io/2025/12/04/C_C++%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>C/C++环境配置（更新ing） | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+  
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiejiejiang2004.github.io/2025/12/04/C_C++%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="jiejiejiang">
+      <meta itemprop="description" content="现在开始，还来得及">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C/C++环境配置（更新ing）
+        </h1>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-12-04 02:04:20 / 修改时间：02:40:37" itemprop="dateCreated datePublished" datetime="2025-12-04T02:04:20+08:00">2025-12-04</time>
+            </span>
+
+          
+            <span id="/2025/12/04/C_C++%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="post-meta-item leancloud_visitors" data-flag-title="C/C++环境配置（更新ing）" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2025/12/04/C_C++%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2025/12/04/C_C++%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="简介">简介</h1>
+<ol type="1">
+<li>DevC++ 是一个基于MinGW的C/C++集成开发环境（IDE），它提供了一个简单而强大的界面，用于编写、编译和调试C/C++程序。</li>
+</ol>
+<span id="more"></span>
+<h1 id="dev-c">Dev C++</h1>
+<h2 id="下载与安装">下载与安装</h2>
+<ol type="1">
+<li>下载源
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://bloodshed-dev-c.en.softonic.com/">Dev-C++官方网站</a></li>
+<li><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/orwelldevcpp/">SourceForge</a></li>
+<li><a target="_blank" rel="noopener" href="https://pc.qq.com/detail/16/detail_163136.html">腾讯软件中心</a></li>
+</ol></li>
+</ol>
+<p>以上下载源中，官方网站似乎上不去了，SourceForge似乎需要魔法，而且下载速度不快。实在不行的话腾讯源也可以，记得选<strong>直接下载</strong>就好了。</p>
+<ol start="2" type="1">
+<li><p><strong>版本选择</strong>：实际上官方最新版5.11早在2017就停止更新（48.1MB）</p></li>
+<li><p><strong>安装步骤</strong>：</p>
+<p><img src="DevC++_01.png" alt="Dev-C++安装界面" /> 这里没有中文选项，直接点击OK即可 <img src="DevC++_02.png" alt="Dev-C++安装界面" /> 选择I Agree <img src="DevC++_03.png" alt="Dev-C++安装界面" /> 不用理会，直接Next <img src="DevC++_04.png" alt="Dev-C++安装界面" /> 选择默认安装路径（这里不建议默认，建议安装在其他盘：比如D盘或者E盘，实在不行也尽量安装在C:\Users\用户名\ 下，不建议安装在C:\Program File 下） 点击Install 等待安装完成 <img src="DevC++_05.png" alt="Dev-C++安装界面" /> 点击Finish（圈内的可选可不选，选了就是直接打开Dev C++而已） 完成安装</p></li>
+</ol>
+<h2 id="首次配置">首次配置</h2>
+<p><img src="DevC++_06.png" alt="Dev-C++配置" /> 这里可以选择简体中文 点击Next <img src="DevC++_07.png" alt="Dev-C++配置" /> 这里可以不做修改，也可以选择你喜欢的字体和配色 点击Next <img src="DevC++_08.png" alt="Dev-C++配置" /> 点击OK</p>
+<p>然后就可以开始使用啦！</p>
+<h3 id="基本使用">基本使用</h3>
+<ol type="1">
+<li><strong>创建新项目</strong>：
+<ul>
+<li>点击「文件」→「新建」→「项目…」</li>
+<li>选择「控制台应用程序」，输入项目名称和保存位置</li>
+</ul></li>
+<li><strong>编写代码</strong>：
+<ul>
+<li>在自动生成的main.cpp文件中编写C/C++代码</li>
+</ul></li>
+<li><strong>编译与运行</strong>：
+<ul>
+<li>点击工具栏上的「编译并运行」按钮（绿色三角形）</li>
+<li>或使用快捷键F11</li>
+</ul></li>
+<li><strong>调试</strong>：
+<ul>
+<li>设置断点：在代码行左侧单击</li>
+<li>点击「调试」→「调试」开始调试</li>
+<li>使用「下一步」、「单步执行」等命令控制调试流程</li>
+</ul></li>
+</ol>
+<h3 id="常用快捷键">常用快捷键</h3>
+<ul>
+<li><strong>F9</strong>：编译</li>
+<li><strong>F11</strong>：编译并运行</li>
+<li><strong>F5</strong>：调试</li>
+<li><strong>Ctrl+N</strong>：新建文件</li>
+<li><strong>Ctrl+O</strong>：打开文件</li>
+<li><strong>Ctrl+S</strong>：保存文件</li>
+</ul>
+<h2 id="codeblocks">CodeBlocks</h2>
+<h3 id="下载与安装-1">下载与安装</h3>
+<ol type="1">
+<li><strong>官方下载地址</strong>：访问 <a target="_blank" rel="noopener" href="https://www.codeblocks.org/downloads/">CodeBlocks官方网站</a></li>
+<li><strong>版本选择</strong>：
+<ul>
+<li>建议下载带有MinGW的版本（如<code>codeblocks-20.03mingw-setup.exe</code>），这样不需要单独安装编译器</li>
+<li>确保选择与操作系统匹配的版本（32位或64位）</li>
+</ul></li>
+<li><strong>安装步骤</strong>：
+<ul>
+<li>运行下载的安装程序</li>
+<li>选择安装语言（支持简体中文）</li>
+<li>接受许可协议</li>
+<li>选择安装类型（建议选择「Full」完整安装）</li>
+<li>选择安装目录</li>
+<li>等待安装完成</li>
+</ul></li>
+</ol>
+<h3 id="首次配置-1">首次配置</h3>
+<ol type="1">
+<li><strong>编译器设置</strong>：
+<ul>
+<li>打开CodeBlocks</li>
+<li>点击菜单栏的「Settings」→「Compiler…」</li>
+<li>在「Toolchain executables」选项卡中，确保编译器路径正确指向MinGW目录</li>
+<li>可以在「Optimization」选项卡中设置优化级别（如-O2）</li>
+</ul></li>
+<li><strong>调试器设置</strong>：
+<ul>
+<li>在同一对话框中切换到「Debugger」选项卡</li>
+<li>确保GDB调试器路径正确设置</li>
+</ul></li>
+<li><strong>界面语言设置</strong>：
+<ul>
+<li>点击菜单栏的「Settings」→「Environment…」</li>
+<li>在「View」选项卡中选择「Interface language」</li>
+<li>选择「简体中文」并重启CodeBlocks</li>
+</ul></li>
+</ol>
+<h3 id="基本使用-1">基本使用</h3>
+<ol type="1">
+<li><strong>创建新项目</strong>：
+<ul>
+<li>点击「File」→「New」→「Project…」</li>
+<li>选择「Console application」，点击「Go」</li>
+<li>选择语言（C或C++），点击「Next」</li>
+<li>输入项目标题和文件夹路径，点击「Next」</li>
+<li>选择编译器，点击「Finish」</li>
+</ul></li>
+<li><strong>编写代码</strong>：
+<ul>
+<li>在自动生成的main.cpp文件中编写代码</li>
+</ul></li>
+<li><strong>编译与运行</strong>：
+<ul>
+<li>点击工具栏上的绿色三角形按钮运行程序</li>
+<li>或使用快捷键F9</li>
+</ul></li>
+<li><strong>调试</strong>：
+<ul>
+<li>设置断点：在代码行号左侧点击</li>
+<li>点击工具栏上的调试按钮（带有小虫子图标的按钮）</li>
+<li>使用「Step into」、「Step over」等控制调试流程</li>
+</ul></li>
+</ol>
+<h3 id="常用快捷键-1">常用快捷键</h3>
+<ul>
+<li><strong>F9</strong>：编译并运行</li>
+<li><strong>Ctrl+F9</strong>：仅编译</li>
+<li><strong>F8</strong>：调试</li>
+<li><strong>F7</strong>：单步进入（调试时）</li>
+<li><strong>Shift+F7</strong>：单步跳过（调试时）</li>
+<li><strong>Ctrl+N</strong>：新建文件</li>
+<li><strong>Ctrl+O</strong>：打开文件</li>
+<li><strong>Ctrl+S</strong>：保存文件 ## Visual Studio</li>
+</ul>
+<h3 id="下载与安装-2">下载与安装</h3>
+<ol type="1">
+<li><strong>官方下载地址</strong>：访问 <a target="_blank" rel="noopener" href="https://visualstudio.microsoft.com/zh-hans/downloads/">Visual Studio官方网站</a></li>
+<li><strong>版本选择</strong>：
+<ul>
+<li>Visual Studio Community：免费版本，适合学生、开源开发者和个人使用</li>
+<li>Visual Studio Professional：专业版，适合专业开发人员</li>
+<li>Visual Studio Enterprise：企业版，提供高级功能</li>
+</ul></li>
+<li><strong>安装步骤</strong>：
+<ul>
+<li>下载Visual Studio安装程序</li>
+<li>运行安装程序，选择「继续」</li>
+<li>在工作负载选择界面，选择「使用C++的桌面开发」工作负载</li>
+<li>可以根据需要选择其他可选组件</li>
+<li>点击「安装」按钮开始安装</li>
+<li>等待安装完成，可能需要重启计算机</li>
+</ul></li>
+</ol>
+<h3 id="首次配置-2">首次配置</h3>
+<ol type="1">
+<li><strong>开发设置</strong>：
+<ul>
+<li>首次启动时，选择开发设置（推荐选择「Visual C++」）</li>
+<li>选择主题颜色</li>
+</ul></li>
+<li><strong>工作空间设置</strong>：
+<ul>
+<li>可以在「工具」→「选项」中配置各种设置</li>
+<li>在「文本编辑器」→「C/C++」中可以配置代码编辑器的各种属性</li>
+</ul></li>
+<li><strong>编译器设置</strong>：
+<ul>
+<li>Visual Studio已内置MSVC编译器，无需额外配置</li>
+<li>在项目属性中可以设置编译选项（右键项目→「属性」）</li>
+</ul></li>
+</ol>
+<h3 id="基本使用-2">基本使用</h3>
+<ol type="1">
+<li><strong>创建新项目</strong>：
+<ul>
+<li>点击「创建新项目」</li>
+<li>选择「控制台应用」（Console App）</li>
+<li>输入项目名称和位置，点击「创建」</li>
+</ul></li>
+<li><strong>编写代码</strong>：
+<ul>
+<li>在自动生成的源文件中编写代码</li>
+</ul></li>
+<li><strong>编译与运行</strong>：
+<ul>
+<li>点击工具栏上的绿色三角形按钮运行程序</li>
+<li>或使用快捷键F5</li>
+<li>也可以使用Ctrl+F5直接运行而不调试</li>
+</ul></li>
+<li><strong>调试</strong>：
+<ul>
+<li>设置断点：在代码行号左侧点击</li>
+<li>按F5开始调试</li>
+<li>使用F10（单步跳过）和F11（单步进入）控制调试流程</li>
+<li>可以在「局部变量」、「监视」窗口查看变量值</li>
+</ul></li>
+</ol>
+<h3 id="常用快捷键-2">常用快捷键</h3>
+<ul>
+<li><strong>F5</strong>：调试运行</li>
+<li><strong>Ctrl+F5</strong>：直接运行（不调试）</li>
+<li><strong>Ctrl+Shift+B</strong>：生成解决方案</li>
+<li><strong>F10</strong>：单步跳过（调试时）</li>
+<li><strong>F11</strong>：单步进入（调试时）</li>
+<li><strong>Ctrl+N</strong>：新建项目/文件</li>
+<li><strong>Ctrl+O</strong>：打开文件</li>
+<li><strong>Ctrl+S</strong>：保存文件</li>
+<li><strong>Ctrl+Shift+S</strong>：保存所有文件</li>
+<li><strong>Ctrl+Z</strong>：撤销</li>
+<li><strong>Ctrl+Y</strong>：重做 ## CLion</li>
+</ul>
+<h3 id="下载与安装-3">下载与安装</h3>
+<ol type="1">
+<li><strong>官方下载地址</strong>：访问 <a target="_blank" rel="noopener" href="https://www.jetbrains.com/clion/download/">JetBrains CLion官方网站</a></li>
+<li><strong>版本选择</strong>：
+<ul>
+<li>可以下载免费试用版</li>
+<li>学生和教育工作者可以申请免费的教育许可证</li>
+<li>也可以选择商业版</li>
+</ul></li>
+<li><strong>安装步骤</strong>：
+<ul>
+<li>下载适合您操作系统的安装包</li>
+<li>运行安装程序</li>
+<li>选择安装位置和创建桌面快捷方式</li>
+<li>等待安装完成</li>
+<li>首次启动时需要激活许可证</li>
+</ul></li>
+</ol>
+<h3 id="首次配置-3">首次配置</h3>
+<ol type="1">
+<li><strong>编译器配置</strong>：
+<ul>
+<li>CLion需要外部编译器，Windows上通常使用MinGW或MSVC</li>
+<li>安装MinGW或确保已安装Visual Studio（提供MSVC）</li>
+<li>首次打开CLion时，它会自动检测可用的编译器</li>
+<li>也可以手动配置：在「File」→「Settings」→「Build, Execution, Deployment」→「Toolchains」中配置</li>
+</ul></li>
+<li><strong>调试器配置</strong>：
+<ul>
+<li>确保已安装GDB（MinGW通常包含GDB）</li>
+<li>在Toolchains设置中确保调试器路径正确</li>
+</ul></li>
+<li><strong>界面设置</strong>：
+<ul>
+<li>可以在「File」→「Settings」→「Appearance &amp; Behavior」→「Appearance」中选择主题</li>
+<li>在「Editor」中可以配置编辑器选项</li>
+</ul></li>
+</ol>
+<h3 id="基本使用-3">基本使用</h3>
+<ol type="1">
+<li><strong>创建新项目</strong>：
+<ul>
+<li>点击「New Project」</li>
+<li>选择「C++ Executable」或「C Executable」</li>
+<li>选择项目位置和C++标准版本</li>
+<li>点击「Create」</li>
+</ul></li>
+<li><strong>编写代码</strong>：
+<ul>
+<li>在自动生成的源文件中编写代码</li>
+</ul></li>
+<li><strong>编译与运行</strong>：
+<ul>
+<li>点击工具栏上的绿色三角形按钮运行程序</li>
+<li>或使用快捷键Shift+F10</li>
+</ul></li>
+<li><strong>调试</strong>：
+<ul>
+<li>设置断点：在代码行号左侧点击</li>
+<li>点击工具栏上的调试按钮（虫子图标）</li>
+<li>或使用快捷键Shift+F9</li>
+<li>使用F8（单步跳过）和F7（单步进入）控制调试流程</li>
+</ul></li>
+</ol>
+<h3 id="常用快捷键-3">常用快捷键</h3>
+<ul>
+<li><strong>Shift+F10</strong>：运行程序</li>
+<li><strong>Shift+F9</strong>：调试程序</li>
+<li><strong>Ctrl+F9</strong>：构建项目</li>
+<li><strong>F7</strong>：单步进入（调试时）</li>
+<li><strong>F8</strong>：单步跳过（调试时）</li>
+<li><strong>Alt+Insert</strong>：生成代码（构造函数、getter/setter等）</li>
+<li><strong>Ctrl+N</strong>：新建项目/文件</li>
+<li><strong>Ctrl+Shift+N</strong>：查找文件</li>
+<li><strong>Ctrl+F</strong>：在当前文件中查找</li>
+<li><strong>Ctrl+S</strong>：保存文件</li>
+<li><strong>Ctrl+Z</strong>：撤销</li>
+<li><strong>Ctrl+Y</strong>：重做 ## VS Code</li>
+</ul>
+<h3 id="下载与安装-4">下载与安装</h3>
+<ol type="1">
+<li><strong>官方下载地址</strong>：访问 <a target="_blank" rel="noopener" href="https://code.visualstudio.com/download">VS Code官方网站</a></li>
+<li><strong>版本选择</strong>：
+<ul>
+<li>选择适合您操作系统的版本（Windows、macOS或Linux）</li>
+<li>可以选择稳定版或Insiders版本（预览版）</li>
+</ul></li>
+<li><strong>安装步骤</strong>：
+<ul>
+<li>下载安装程序</li>
+<li>运行安装程序</li>
+<li>按照提示完成安装</li>
+<li>可以选择添加到PATH、创建桌面快捷方式等选项</li>
+</ul></li>
+</ol>
+<h3 id="首次配置-4">首次配置</h3>
+<ol type="1">
+<li><strong>安装C/C++扩展</strong>：
+<ul>
+<li>打开VS Code</li>
+<li>点击左侧边栏的扩展图标（方块图标）</li>
+<li>搜索「C/C++」并安装Microsoft官方的C/C++扩展</li>
+</ul></li>
+<li><strong>安装其他有用扩展</strong>（可选）：
+<ul>
+<li>C/C++ Extension Pack：提供额外的C/C++开发工具</li>
+<li>Code Runner：一键运行代码</li>
+<li>C/C++ Themes：额外的代码主题</li>
+<li>Bracket Pair Colorizer：为括号添加颜色，方便识别</li>
+</ul></li>
+<li><strong>配置编译器</strong>：
+<ul>
+<li>VS Code需要外部编译器，Windows上推荐安装MinGW或使用Visual Studio的MSVC</li>
+<li>确保编译器已安装并添加到系统PATH</li>
+<li>可以通过在终端中运行<code>gcc --version</code>或<code>cl.exe</code>来验证编译器是否正确安装</li>
+</ul></li>
+</ol>
+<h3 id="基本使用-4">基本使用</h3>
+<ol type="1">
+<li><strong>创建项目文件夹</strong>：
+<ul>
+<li>创建一个新文件夹作为项目目录</li>
+<li>在VS Code中选择「文件」→「打开文件夹」，打开该目录</li>
+</ul></li>
+<li><strong>创建源文件</strong>：
+<ul>
+<li>在Explorer中右键点击，选择「新建文件」</li>
+<li>创建<code>.c</code>或<code>.cpp</code>文件</li>
+</ul></li>
+<li><strong>编写代码</strong>：
+<ul>
+<li>在新建的源文件中编写代码</li>
+</ul></li>
+<li><strong>编译与运行</strong>：
+<ul>
+<li>方法一：使用Code Runner扩展
+<ul>
+<li>安装Code Runner扩展</li>
+<li>点击右上角的运行按钮或使用快捷键Ctrl+Alt+N</li>
+</ul></li>
+<li>方法二：使用终端
+<ul>
+<li>打开终端（Ctrl+`）</li>
+<li>使用gcc编译：<code>gcc filename.c -o output.exe</code></li>
+<li>运行程序：<code>./output.exe</code></li>
+</ul></li>
+<li>方法三：配置tasks.json
+<ul>
+<li>按F5，选择「C++ (GDB/LLDB)」或「C++ (Windows)」</li>
+<li>选择编译器</li>
+<li>自动生成launch.json和tasks.json配置文件</li>
+<li>再次按F5运行程序</li>
+</ul></li>
+</ul></li>
+<li><strong>调试</strong>：
+<ul>
+<li>设置断点：在代码行号左侧点击</li>
+<li>按F5开始调试</li>
+<li>使用调试控制台查看变量、控制流程</li>
+</ul></li>
+</ol>
+<h3 id="常用快捷键-4">常用快捷键</h3>
+<ul>
+<li><strong>Ctrl+N</strong>：新建文件</li>
+<li><strong>Ctrl+O</strong>：打开文件</li>
+<li><strong>Ctrl+S</strong>：保存文件</li>
+<li><strong>Ctrl+Shift+S</strong>：保存所有文件</li>
+<li><strong>Ctrl+`</strong>：打开/关闭终端</li>
+<li><strong>Ctrl+Shift+`</strong>：创建新终端</li>
+<li><strong>F5</strong>：开始调试</li>
+<li><strong>Ctrl+F5</strong>：运行而不调试（需要配置）</li>
+<li><strong>Ctrl+Shift+B</strong>：构建项目（需要配置tasks.json）</li>
+<li><strong>Ctrl+F</strong>：在当前文件中查找</li>
+<li><strong>Ctrl+H</strong>：替换</li>
+<li><strong>Alt+↑/↓</strong>：上下移动行</li>
+<li><strong>Ctrl+/</strong>：注释/取消注释 ## Sublime Text</li>
+</ul>
+<h3 id="下载与安装-5">下载与安装</h3>
+<ol type="1">
+<li><strong>官方下载地址</strong>：访问 <a target="_blank" rel="noopener" href="https://www.sublimetext.com/download">Sublime Text官方网站</a></li>
+<li><strong>版本选择</strong>：
+<ul>
+<li>Sublime Text 3或Sublime Text 4（最新版）</li>
+<li>选择适合您操作系统的版本（Windows、macOS或Linux）</li>
+</ul></li>
+<li><strong>安装步骤</strong>：
+<ul>
+<li>下载安装程序</li>
+<li>运行安装程序</li>
+<li>按照提示完成安装</li>
+<li>Sublime Text是共享软件，可以免费使用，但会偶尔弹出购买提示</li>
+</ul></li>
+</ol>
+<h3 id="首次配置-5">首次配置</h3>
+<ol type="1">
+<li><strong>安装Package Control</strong>（包管理器）：
+<ul>
+<li>打开Sublime Text</li>
+<li>使用快捷键Ctrl+`打开控制台</li>
+<li>复制并粘贴对应版本的安装代码（可在<a target="_blank" rel="noopener" href="https://packagecontrol.io/installation">Package Control官网</a>获取）</li>
+<li>按Enter键执行</li>
+<li>等待安装完成并重启Sublime Text</li>
+</ul></li>
+<li><strong>安装C/C++相关插件</strong>：
+<ul>
+<li>按Ctrl+Shift+P打开命令面板</li>
+<li>输入「Package Control: Install Package」并回车</li>
+<li>搜索并安装以下插件：
+<ul>
+<li><strong>C++ Snippets</strong>：提供C++代码片段</li>
+<li><strong>SublimeLinter</strong>：代码检查工具</li>
+<li><strong>SublimeLinter-gcc</strong>：GCC代码检查器</li>
+<li><strong>EasyClangComplete</strong>：代码补全</li>
+<li><strong>Build System Plus</strong>：增强构建功能</li>
+</ul></li>
+</ul></li>
+<li><strong>配置编译器</strong>：
+<ul>
+<li>Sublime Text需要外部编译器，Windows上推荐安装MinGW</li>
+<li>确保编译器已安装并添加到系统PATH</li>
+<li>配置构建系统：
+<ul>
+<li>点击「工具」→「构建系统」→「新建构建系统…」</li>
+<li>输入以下配置（以GCC为例）： <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;cmd&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;gcc&quot;</span><span class="punctuation">,</span> <span class="string">&quot;$&#123;file&#125;&quot;</span><span class="punctuation">,</span> <span class="string">&quot;-o&quot;</span><span class="punctuation">,</span> <span class="string">&quot;$&#123;file_path&#125;/$&#123;file_base_name&#125;&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;file_regex&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;working_dir&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;file_path&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;selector&quot;</span><span class="punctuation">:</span> <span class="string">&quot;source.c&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;shell&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;variants&quot;</span><span class="punctuation">:</span></span><br><span class="line">    <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Run&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cmd&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;start&quot;</span><span class="punctuation">,</span> <span class="string">&quot;cmd&quot;</span><span class="punctuation">,</span> <span class="string">&quot;/k&quot;</span><span class="punctuation">,</span> <span class="string">&quot;$&#123;file_path&#125;/$&#123;file_base_name&#125;.exe&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;shell&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></li>
+<li>保存为「C.sublime-build」</li>
+<li>对于C++，创建类似的配置但使用g++编译器</li>
+</ul></li>
+</ul></li>
+</ol>
+<h3 id="基本使用-5">基本使用</h3>
+<ol type="1">
+<li><strong>创建文件</strong>：
+<ul>
+<li>点击「文件」→「新建文件」</li>
+<li>保存为<code>.c</code>或<code>.cpp</code>文件</li>
+</ul></li>
+<li><strong>编写代码</strong>：
+<ul>
+<li>在文件中编写代码</li>
+<li>利用安装的插件提供的代码补全和片段功能</li>
+</ul></li>
+<li><strong>编译与运行</strong>：
+<ul>
+<li>确保已选择正确的构建系统：「工具」→「构建系统」→选择您创建的构建系统</li>
+<li>按Ctrl+B编译代码</li>
+<li>按Ctrl+Shift+B运行程序（或从构建菜单中选择「Run」）</li>
+</ul></li>
+<li><strong>调试</strong>：
+<ul>
+<li>Sublime Text本身不包含调试器，需要配合外部调试器使用</li>
+<li>可以安装「SublimeGDB」插件来集成GDB调试功能</li>
+<li>或者使用命令行调试器</li>
+</ul></li>
+</ol>
+<h3 id="常用快捷键-5">常用快捷键</h3>
+<ul>
+<li><strong>Ctrl+N</strong>：新建文件</li>
+<li><strong>Ctrl+O</strong>：打开文件</li>
+<li><strong>Ctrl+S</strong>：保存文件</li>
+<li><strong>Ctrl+Shift+S</strong>：另存为</li>
+<li><strong>Ctrl+B</strong>：构建/编译</li>
+<li><strong>Ctrl+Shift+B</strong>：运行构建变体</li>
+<li><strong>Ctrl+F</strong>：在当前文件中查找</li>
+<li><strong>Ctrl+H</strong>：替换</li>
+<li><strong>Ctrl+L</strong>：选择整行</li>
+<li><strong>Ctrl+Shift+D</strong>：复制当前行</li>
+<li><strong>Ctrl+X</strong>：剪切当前行（如果未选择文本）</li>
+<li><strong>Ctrl+/</strong>：注释/取消注释</li>
+<li><strong>Ctrl+Shift+P</strong>：打开命令面板</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C++</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/11/23/%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88MySQL%EF%BC%89%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/" rel="prev" title="数据库（MySQL）知识整理（更新ing）">
+      <i class="fa fa-chevron-left"></i> 数据库（MySQL）知识整理（更新ing）
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dev-c"><span class="nav-number">2.</span> <span class="nav-text">Dev C++</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">下载与安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A6%96%E6%AC%A1%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">首次配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">2.2.1.</span> <span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">2.2.2.</span> <span class="nav-text">常用快捷键</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#codeblocks"><span class="nav-number">2.3.</span> <span class="nav-text">CodeBlocks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">下载与安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A6%96%E6%AC%A1%E9%85%8D%E7%BD%AE-1"><span class="nav-number">2.3.2.</span> <span class="nav-text">首次配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-1"><span class="nav-number">2.3.3.</span> <span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE-1"><span class="nav-number">2.3.4.</span> <span class="nav-text">常用快捷键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85-2"><span class="nav-number">2.3.5.</span> <span class="nav-text">下载与安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A6%96%E6%AC%A1%E9%85%8D%E7%BD%AE-2"><span class="nav-number">2.3.6.</span> <span class="nav-text">首次配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-2"><span class="nav-number">2.3.7.</span> <span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE-2"><span class="nav-number">2.3.8.</span> <span class="nav-text">常用快捷键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85-3"><span class="nav-number">2.3.9.</span> <span class="nav-text">下载与安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A6%96%E6%AC%A1%E9%85%8D%E7%BD%AE-3"><span class="nav-number">2.3.10.</span> <span class="nav-text">首次配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-3"><span class="nav-number">2.3.11.</span> <span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE-3"><span class="nav-number">2.3.12.</span> <span class="nav-text">常用快捷键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85-4"><span class="nav-number">2.3.13.</span> <span class="nav-text">下载与安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A6%96%E6%AC%A1%E9%85%8D%E7%BD%AE-4"><span class="nav-number">2.3.14.</span> <span class="nav-text">首次配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-4"><span class="nav-number">2.3.15.</span> <span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE-4"><span class="nav-number">2.3.16.</span> <span class="nav-text">常用快捷键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85-5"><span class="nav-number">2.3.17.</span> <span class="nav-text">下载与安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A6%96%E6%AC%A1%E9%85%8D%E7%BD%AE-5"><span class="nav-number">2.3.18.</span> <span class="nav-text">首次配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-5"><span class="nav-number">2.3.19.</span> <span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE-5"><span class="nav-number">2.3.20.</span> <span class="nav-text">常用快捷键</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="jiejiejiang"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">jiejiejiang</p>
+  <div class="site-description" itemprop="description">现在开始，还来得及</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+<!-- CloudCalendar -->
+<div class="widget-wrap" style="width: 90%;margin-left: auto;margin-right: auto; opacity: 0.97;">
+	<div class="widget" id="CloudCalendar"></div>
+</div>
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jiejiejiang</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">52k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:07</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        displayMath: {'[+]': [['$$', '$$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+<!-- calendar widget -->
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: 'unset',
+  left: '32px',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'nS57E3JRn6eYspCCr9pXSVn5-gzGzoHsz',
+      appKey     : 'L8rQJuf9mDfJkhZvlLa9UhPq',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  <!-- calendar widget -->
+
+
+</body>
+</html>
