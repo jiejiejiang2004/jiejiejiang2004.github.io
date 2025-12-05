@@ -1,24 +1,22 @@
-<h1>theme-next-calendar</h1>
+<h1 id="theme-next-calendar">theme-next-calendar</h1>
 <p>简洁的hexo-next日历云插件, 在日历上显示提交标记</p>
-<p><img src="example.png" alt=""></p>
+<p><img src="example.png" /></p>
 <h3 id="安装">安装</h3>
-<ol>
+<ol type="1">
 <li>首先安装hexo插件</li>
 </ol>
-<pre><code class="language-shell">npm install theme-next/theme-next-calendar
-</code></pre>
-<ol start="2">
+<pre class="shell"><code>npm install theme-next/theme-next-calendar</code></pre>
+<ol start="2" type="1">
 <li>在next主题配置文件<code>_config.yml</code>配置</li>
 </ol>
-<pre><code class="language-yaml">CloudCalendar:
-  enable: true
-  language: zh-CN
-  single: true
-  root: /calendar/
-  calendarCdn: //cdn.jsdelivr.net/gh/theme-next/theme-next-calendar/calendar.min.js
-  langCdn: //cdn.jsdelivr.net/gh/theme-next/theme-next-calendar/languages.min.js
-  #disableSidebar: false
-</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CloudCalendar</span><span class="kw">:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">enable</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">language</span><span class="kw">:</span><span class="at"> zh-CN</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">single</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">root</span><span class="kw">:</span><span class="at"> /calendar/</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">calendarCdn</span><span class="kw">:</span><span class="at"> //cdn.jsdelivr.net/gh/theme-next/theme-next-calendar/calendar.min.js</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">langCdn</span><span class="kw">:</span><span class="at"> //cdn.jsdelivr.net/gh/theme-next/theme-next-calendar/languages.min.js</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">  #disableSidebar: false</span></span></code></pre></div>
 <h3 id="渲染日历">渲染日历</h3>
 <p>默认是在边栏中渲染, 当然也可以在任何位置显示, 只要<code>disableSidebar</code>禁用，并添加<code>sidebar.swig</code>中的代码至你希望的位置</p>
 <h3 id="自定义日历颜色">自定义日历颜色</h3>
