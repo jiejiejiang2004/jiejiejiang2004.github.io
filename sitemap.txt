@@ -10,12 +10,12 @@ https://jiejiejiang2004.github.io/2025/10/29/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%8
 https://jiejiejiang2004.github.io/tags/index.html
 https://jiejiejiang2004.github.io/
 https://jiejiejiang2004.github.io/tags/Python/
-https://jiejiejiang2004.github.io/tags/SCAU/
-https://jiejiejiang2004.github.io/tags/C/
-https://jiejiejiang2004.github.io/tags/Fenwick/
 https://jiejiejiang2004.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/
-https://jiejiejiang2004.github.io/tags/DataBase/
-https://jiejiejiang2004.github.io/tags/MySQL/
+https://jiejiejiang2004.github.io/tags/C/
+https://jiejiejiang2004.github.io/tags/SCAU/
 https://jiejiejiang2004.github.io/tags/Nowcoder/
 https://jiejiejiang2004.github.io/tags/%E9%A2%98%E8%A7%A3/
+https://jiejiejiang2004.github.io/tags/DataBase/
+https://jiejiejiang2004.github.io/tags/MySQL/
+https://jiejiejiang2004.github.io/tags/Fenwick/
 https://jiejiejiang2004.github.io/categories/%E5%AD%A6%E4%B9%A0/

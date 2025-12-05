@@ -108,7 +108,7 @@
   </url>
   
   <url>
-    <loc>https://jiejiejiang2004.github.io/tags/SCAU/</loc>
+    <loc>https://jiejiejiang2004.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2025-12-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -122,14 +122,21 @@
   </url>
   
   <url>
-    <loc>https://jiejiejiang2004.github.io/tags/Fenwick/</loc>
+    <loc>https://jiejiejiang2004.github.io/tags/SCAU/</loc>
     <lastmod>2025-12-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://jiejiejiang2004.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
+    <loc>https://jiejiejiang2004.github.io/tags/Nowcoder/</loc>
+    <lastmod>2025-12-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jiejiejiang2004.github.io/tags/%E9%A2%98%E8%A7%A3/</loc>
     <lastmod>2025-12-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -150,14 +157,7 @@
   </url>
   
   <url>
-    <loc>https://jiejiejiang2004.github.io/tags/Nowcoder/</loc>
-    <lastmod>2025-12-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jiejiejiang2004.github.io/tags/%E9%A2%98%E8%A7%A3/</loc>
+    <loc>https://jiejiejiang2004.github.io/tags/Fenwick/</loc>
     <lastmod>2025-12-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
