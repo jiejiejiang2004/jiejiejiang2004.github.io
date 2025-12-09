@@ -126,14 +126,28 @@
   </url>
   
   <url>
-    <loc>https://jiejiejiang2004.github.io/tags/C/</loc>
+    <loc>https://jiejiejiang2004.github.io/tags/IDE/</loc>
     <lastmod>2025-12-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://jiejiejiang2004.github.io/tags/IDE/</loc>
+    <loc>https://jiejiejiang2004.github.io/tags/CodeBlocks/</loc>
+    <lastmod>2025-12-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jiejiejiang2004.github.io/tags/Python/</loc>
+    <lastmod>2025-12-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jiejiejiang2004.github.io/tags/C/</loc>
     <lastmod>2025-12-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -154,21 +168,7 @@
   </url>
   
   <url>
-    <loc>https://jiejiejiang2004.github.io/tags/Python/</loc>
-    <lastmod>2025-12-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://jiejiejiang2004.github.io/tags/CCPC/</loc>
-    <lastmod>2025-12-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jiejiejiang2004.github.io/tags/CodeBlocks/</loc>
     <lastmod>2025-12-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -183,6 +183,13 @@
   
   <url>
     <loc>https://jiejiejiang2004.github.io/tags/MySQL/</loc>
+    <lastmod>2025-12-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jiejiejiang2004.github.io/tags/Fenwick/</loc>
     <lastmod>2025-12-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -204,13 +211,6 @@
   
   <url>
     <loc>https://jiejiejiang2004.github.io/tags/%E9%A2%98%E8%A7%A3/</loc>
-    <lastmod>2025-12-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jiejiejiang2004.github.io/tags/Fenwick/</loc>
     <lastmod>2025-12-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

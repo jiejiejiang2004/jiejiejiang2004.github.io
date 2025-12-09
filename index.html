@@ -357,7 +357,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-12-10 00:55:33" itemprop="dateModified" datetime="2025-12-10T00:55:33+08:00">2025-12-10</time>
+                <time title="修改时间：2025-12-10 01:22:36" itemprop="dateModified" datetime="2025-12-10T01:22:36+08:00">2025-12-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -396,14 +396,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>844</span>
+              <span>1.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 mins.</span>
+              <span>4 mins.</span>
             </span>
 
         </div>
@@ -415,44 +415,60 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Hello, World!\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <p>大家好！这里是杰杰酱，以下内容有需要补充的，或者大家有什么意见或者建议，欢迎在评论区留言！ 如果看到我会更新的，欢迎大家批评指正！</p>
+<hr>
+<div style="background-color: #f5fafe; border-radius: 8px; padding: 20px; margin: 10px 0 25px 0; border-left: 4px solid #4299e1;">
+<p style="font-size: 20px; margin: 0; line-height: 1.6; color: #2d3748; font-style: italic;">
+“The only way to learn a new programming language is by writing programs in it.”
+</p>
+<p style="text-align: right; margin: 10px 0 0 0; color: #718096; font-size: 15px;">
+— Brian W. Kernighan, 《The C Programming Language》
+</p>
+</div>
+<h3 id="经典示例hello-world-程序">经典示例：Hello, World! 程序</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Hello, World!\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>学习C语言的旅程，几乎都是从这个经典的“Hello, World!”程序起步的 —— 相信多数老师都会让大家先写下这段代码。</p>
 <p>今天我们就借着它，拆解C语言的核心基础，迈出入门第一步。</p>
-<p><strong>为什么要这样写？每个部分都藏着关键逻辑</strong></p>
-<ol type="1">
-<li><p><code>int main()</code>：程序的入口<br>
-电脑运行程序时，必须明确“从哪里开始执行”——这是程序的核心起点。 C语言有个硬性规定：所有可执行程序都必须有且仅有一个<code>main()</code>函数，这就是程序的入口。</p>
+<hr>
+<h3 id="为什么要这样写">📌 为什么要这样写？</h3>
+<h4 id="int-main程序的入口">1. <code>int main()</code>：程序的入口</h4>
+<p>电脑运行程序时，必须明确“从哪里开始执行”——这是程序的核心起点。 C语言有个硬性规定：所有可执行程序都必须有且仅有一个<code>main()</code>函数，这就是程序的入口。</p>
 <blockquote>
 <p>这部分实际上有多种写法：</p>
 <ol type="1">
 <li><p><code>int main(void)</code>: 无参数，返回int类型（标准写法）</p></li>
 <li><p><code>int main(int argc, char *argv[])</code>: 带参数，返回int类型（应该是在工程中的常用写法）</p></li>
-<li><p><code>signed main()</code>: 与<code>int main()</code>相同，返回int类型. 一般在算法竞赛中，在使用了<code>#define int long long</code>后，才会使用。</p></li>
+<li><p><code>signed main()</code>: 与<code>int main()</code>相同，返回int类型. 一般在算法竞赛中，在使用了<code>#define int long long</code>后，才会使用。（具体原因，后面会作解释）</p></li>
 <li><p><code>void main()</code>: 无返回值（最常见的非标准写法） <strong>(不建议使用)</strong></p></li>
 <li><p><code>main()</code>: 省略返回值类型（旧标准兼容写法） <strong>(不建议使用)</strong></p></li>
 </ol>
-</blockquote></li>
-<li><p><code>{ ... }</code>：代码块</p>
+</blockquote>
+<hr>
+<h4 id="代码块">2. <code>{ ... }</code>：代码块</h4>
 <p><code>main()</code>后面的一对大括号<code>{ }</code>，划定了这个入口函数的代码块范围，意思是：所有在<code>{ }</code>里的代码，都将被视为<code>main()</code>函数的一部分，会被顺序执行。</p>
 <p>我们想让电脑做的所有操作（比如输出文字，或者数学运算），都必须写在这对大括号之间。</p>
-<p>并不只是函数后面需要放代码块，其他的一些关键字后也要放，比如<code>if</code>、<code>for</code>、<code>while</code>等，后面会详细介绍。</p></li>
-<li><p><code>printf("Hello, World!\n");</code>：实现输出功能的核心指令</p>
+<p>并不只是函数后面需要放代码块，其他的一些关键字后也要放，比如<code>if</code>、<code>for</code>、<code>while</code>等，后面会详细介绍。</p>
+<hr>
+<h4 id="printfhello-worldn实现输出功能的核心指令">3. <code>printf("Hello, World!\n");</code>：实现输出功能的核心指令</h4>
 <p>我们的目标是在屏幕上打印“Hello, World!”这句话</p>
 <ul>
-<li><p>而<code>printf()</code>正是C语言用来格式化输出的工具（<code>print</code>=打印，<code>f</code>=format，即格式化）。</p></li>
-<li><p>括号里的<code>"Hello, World!\n"</code>是要输出的内容（双引号包裹的是“字符串”）。</p></li>
-<li><p>末尾的<code>\n</code>是换行符，能让输出后光标自动换行。</p></li>
-<li><p>最后必须加<code>;</code>，这是C语言的“语句结束符”，告诉电脑“这条指令到这就完了”。</p></li>
-</ul></li>
-<li><p><code>#include &lt;stdio.h&gt;</code>：<code>printf()</code>的声明</p>
+<li>而<code>printf()</code>正是C语言用来格式化输出的工具（<code>print</code>=打印，<code>f</code>=format，即格式化）。</li>
+<li>括号里的<code>"Hello, World!\n"</code>是要输出的内容（双引号包裹的是“字符串”）。</li>
+<li>末尾的<code>\n</code>是换行符，能让输出后光标自动换行。</li>
+<li>最后必须加<code>;</code>，这是C语言的“语句结束符”，告诉电脑“这条指令到这就完了”。</li>
+</ul>
+<hr>
+<h4 id="include-stdio.hprintf的声明">4. <code>#include &lt;stdio.h&gt;</code>：<code>printf()</code>的声明</h4>
 <p>电脑不会凭空认识<code>printf()</code>函数，因为它不是C语言的“内置默认功能”，而是在C语言“标准输入输出库”（简称stdio库）里的工具。</p>
-<p><code>#include</code>是C语言的预处理指令，作用相当于复制粘贴：在编译之前，<code>#include &lt;stdio.h&gt;</code>会把stdio库的所有内容（包含<code>printf()</code>的函数声明、使用规则）复制到当前程序中，告诉电脑：<code>printf()</code>是合法工具，该怎么调用它。</p>
-<p>如果少了这一行，电脑会不认识<code>printf()</code>，程序就会报错。</p></li>
-<li><p><code>return 0;</code>：函数的“结束信号”</p>
+<p><code>#include</code>是C语言的预处理指令，作用相当于复制粘贴：在编译之前，<code>#include &lt;stdio.h&gt;</code>会<strong>在编译的时候</strong>把stdio头文件的所有内容（包含<code>printf()</code>的函数声明、使用规则）链接到当前程序中，告诉电脑：<code>printf()</code>是合法工具，该怎么调用它。</p>
+<p>如果少了这一行，电脑会不认识<code>printf()</code>，程序就会报错。</p>
+<hr>
+<h4 id="return-0函数的结束信号">5. <code>return 0;</code>：函数的“结束信号”</h4>
 <p>回到<code>main()</code>函数开头的<code>int</code>：<code>return 0;</code>就是履行这个约定。</p>
 <p>当<code>main()</code>函数里的所有指令都执行完后，会向操作系统返回一个“0”，表示告诉系统：“这个程序正常执行完毕，没有出错”。</p>
-<p>实际上，从C++11开始，<code>return 0;</code>可以不用写，因为编译器会隐式插入 <code>return 0;</code>，等价于显式书写。（但是这并不代表其他函数也不用return，这只是因为 main 函数比较特殊而已）</p></li>
-</ol>
+<p>实际上，从C++11开始，<code>return 0;</code>可以不用写，因为编译器会隐式插入 <code>return 0;</code>，等价于显式书写。（但是这并不代表其他函数也不用return，这只是因为 main 函数比较特殊而已）</p>
+<hr>
+<p>经过上面部分的学习，相信你一定清楚了一个基本的C程序需要包含什么东西了，希望这篇文章能帮助你入门C语言。</p>
 
       
     </div>
@@ -1302,7 +1318,7 @@ $$</span></p>
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:04</span>
+    <span title="站点阅读时长">3:05</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
